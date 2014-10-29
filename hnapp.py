@@ -108,12 +108,10 @@ def route_rss():
 	# RSS
 	elif flask.request.path == '/rss' and query is not None:
 		feed = AtomFeed(title=title.encode('ascii', 'xmlcharrefreplace'),
-						title_type='text',
+						title_type='html',
 						feed_url=query_url(text_query, output_format='rss'),
 						author='via hnapp',
-						# feed_url=flask.request.url,
 						url=query_url(text_query),
-						# url = flask.request.url,
 						generator=('hnapp', app.config['HOST_NAME'], None)
 						)
 		for item in items:
