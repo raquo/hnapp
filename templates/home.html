@@ -4,42 +4,42 @@
 	
 <div id='all'>
 	
-	{% include 'header.html' %}
+	{%- include 'header.html' -%}
 	
 	<main>
 		
-		{% if query is none %}
-			{% include 'front.html' %}
-		{% else %}
-		<div id='subscribe'>
-			Subscribe to this search:&nbsp; <a href='{{ rss_url }}'>RSS</a>, <a href='{{ json_url }}'>JSON</a>
-		</div>
-		<table id='items'>
-			{% for item in items %}
-			<tr class='item'>
-				<td class='item_score'>{{ item.score }}</td>
-				<td>
-					<a href='{{ item.main_url() }}' class='item_link'>{{ item.title }}</a>
-					{% if item.domain is none %}
-						<span class='item_domain'>— <a href='/?q=type:{{ item.subkind }}'>{{ item.subkind }}</a></span>
-					{% else %}
-						<span class='item_domain'>— <a href='/?q=host:{{ item.domain }}'>{{ item.domain }}</a></span>
-					{% endif %}
-					
-					<div class='item_subline'>
-						by <a href='/?q=author:{{ item.author }}'>{{ item.author }}</a> {{ item.date_posted|timesince }} – <a href='{{ item.comments_url() }}'>{{ item.num_comments }} comments</a>
-					</div>
-				</td>
-			</tr>
-			{% else %}
-			Nothing found :(
-			{% endfor %}
-		</table>
-		{% endif %}
+		{% if query is none -%}
+			{%- include 'front.html' -%}
+		{%- else -%}
+			<div id='subscribe'>
+				Subscribe to this search:&nbsp; <a href='{{ rss_url }}'>RSS</a>, <a href='{{ json_url }}'>JSON</a>
+			</div>
+			<table id='items'>
+				{% for item in items -%}
+				<tr class='item'>
+					<td class='item_score'>{{ item.score }}</td>
+					<td>
+						<a href='{{ item.main_url() }}' class='item_link'>{{ item.title }}</a>
+						{% if item.domain is none -%}
+							<span class='item_domain'>— <a href='/?q=type:{{ item.subkind }}'>{{ item.subkind }}</a></span>
+						{%- else -%}
+							<span class='item_domain'>— <a href='/?q=host:{{ item.domain }}'>{{ item.domain }}</a></span>
+						{%- endif %}
+						
+						<div class='item_subline'>
+							by <a href='/?q=author:{{ item.author }}'>{{ item.author }}</a> {{ item.date_posted|timesince }} – <a href='{{ item.comments_url() }}'>{{ item.num_comments }} comments</a>
+						</div>
+					</td>
+				</tr>
+				{%- else -%}
+				Nothing found :(
+				{%- endfor %}
+			</table>
+		{%- endif %}
 		
 	</main>
 	
-	{% include 'footer.html' %}
+	{%- include 'footer.html' -%}
 	
 </div>
 	

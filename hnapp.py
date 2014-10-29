@@ -4,11 +4,7 @@ import flask
 import flask.ext.sqlalchemy
 import sqlalchemy
 
-# import PyRSS2Gen
-# from feedgen.feed import FeedGenerator
-# from datetime import datetime
 from werkzeug.contrib.atom import AtomFeed
-# from utils import UTC
 import urllib
 
 app = flask.Flask(__name__,
@@ -28,11 +24,7 @@ from search import Search
 from urlparse import urljoin
 from datetime import datetime
 
-@app.template_filter()
-def domain(item):
-	if item.domain is None:
-		return 'self.%s' % item.subkind
-	return item.domain
+
 
 
 @app.template_filter()
@@ -61,16 +53,13 @@ def timesince(dt, default="just now"):
 
 	return default
 
+
+
 @app.before_request
 def remove_trailing_slash():
 	if flask.request.path != '/' and flask.request.path.endswith('/'):
 		return flask.redirect(flask.request.path[:-1])
 
-
-
-@app.errorhandler(404)
-def error_404(e):
-	return flask.render_template('error_404.html'), 404
 
 
 def query_url(text_query, output_format=None):
@@ -82,10 +71,13 @@ def query_url(text_query, output_format=None):
 	return url
 
 
+
 @app.route('/rss', methods=['GET'])
 @app.route('/json', methods=['GET'])
 @app.route('/', methods=['GET'])
 def route_rss():
+	
+	# <<< Shall we split this into three routes?
 	
 	# Get query and format
 	text_query = flask.request.args.get('q', None)
@@ -138,22 +130,7 @@ def route_rss():
 	# output_format defined but query is not
 	else:
 		flask.abort(404)
-	
-	# Compile RSS feed
-	# feed = FeedGenerator()
-	# feed.title('hnapp: %s' % text_query)
-	# feed.description('hnapp: %s' % text_query)
-	# feed.link(href=flask.request.url, rel='alternate') # <<< !!!
-	# feed.language('en')
-	# # Add items
-	# for item in items:
-	# 	entry = feed.add_entry()
-	# 	entry.title(item.title)
-	# 	entry.link(href=item.main_url(), rel='alternate')
-	# 	entry.description(item.feed_description())
-	# 	entry.guid(item.comments_url())
-	# 	entry.published(published=item.date_posted.replace(tzinfo=UTC()))
-	# return feed.rss_str(pretty=True)
+
 
 
 @app.route('/status', methods=['GET'])
@@ -174,16 +151,22 @@ def route_status():
 	return flask.render_template('status.html', **page_data)
 
 
-@app.route('/test', methods=['GET'])
-def route_test():
-	
-	return
-	# page_data = {
-	# 	'config': app.config,
-	# 	'items': scraper.items,
-	# 	'more_url': scraper.more_url
-	# 	}
-	# return flask.render_template('test.html', **page_data)
+
+@app.errorhandler(404)
+def error(e):
+	return flask.render_template('error.html', error=u'404 – Page Not Found'), 404
+
+
+
+@app.errorhandler(403)
+def error(e):
+	return flask.render_template('error.html', error=u'403 – Access Denied'), 403
+
+
+
+@app.errorhandler(500)
+def error(e):
+	return flask.render_template('error.html', error=u'500 – Internal Server Error'), 500
 
 
 
