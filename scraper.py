@@ -119,7 +119,7 @@ class Scraper(object):
 			db.session.add(item_data)
 			print "Lost %s because %s" % (item_data.id, item_data.reason), '\n'
 		else:
-			if ('type' not in item_data) or item_data['type'] in ('story', 'comment', 'poll', 'job'):
+			if item_data.get('type', None) in ('story', 'comment', 'poll', 'job', None):
 				print "Saving %d" % item_data['id'], '\n'
 				compiled_data = self.compile_item_data(item_data, front_page)
 				item = Item.create_or_update(compiled_data)
@@ -195,7 +195,7 @@ class Scraper(object):
 					item_data['domain'] = item_data['domain'][4:]
 		
 		# Detect broken stories
-		if ('type' not in raw_item) or (raw_item['type'] != 'comment' and 'title' not in raw_item):
+		if raw_item.get('type', None) != 'comment' and 'title' not in raw_item):
 			item_data['deleted'] = True
 		
 		# Set kind and subkind
@@ -205,7 +205,7 @@ class Scraper(object):
 			'story': ['story', 'link'],
 			'poll': ['story', 'poll'],
 			'job': ['story', 'job'],
-			None: ['story', 'link'] # <<< broken item...
+			None: ['story', 'link'] # <<< broken item... maybe these fields should be nullable in DB
 		}
 		item_data['kind'], item_data['subkind'] = item_types[raw_item.get('type', None)]
 		# Special treatment for ask/show stories

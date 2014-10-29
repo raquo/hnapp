@@ -26,7 +26,7 @@ def test():
 @manager.command
 def init():
 	s = Scraper()
-        s.connect()
+	s.connect()
 	s.save_newest_items()
 
 @manager.command
