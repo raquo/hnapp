@@ -5,7 +5,10 @@
 		<button id='query_submit' type='submit' tabindex='2'>Search</button>
 		<div id='query_wrapper'>
 			<input id='query' name='q' type='text' value='{{ query if query is not none else '' }}' tabindex='1' placeholder='Enter search query, e.g.   twitter | facebook score>10 host:techcrunch.com' />
-			<a href='#' id='advanced_search_link' tabindex='3'>Advanced search: filter by points, author, domain, etc.</a>
+			<a href='#' id='syntax_toggle' tabindex='3'>Advanced search: filter by points, author, domain, etc.</a>
+			<div id='syntax'>
+				Syntax definitions here...
+			</div>
 		</div>
 	</form>
 </header>

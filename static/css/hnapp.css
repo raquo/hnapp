@@ -95,7 +95,7 @@ header {
 			background: #1def1c;
 		}
 	
-	#advanced_search_link {
+	#syntax_toggle {
 		display: inline-block;
 		margin: 2px 0 0 8px;
 		font-size: 12px;
@@ -103,6 +103,12 @@ header {
 		color: white;
 		/*text-decoration: underline dashed;*/
 	}
+	
+	#syntax {
+		display: none;
+	}
+	
+	
 
 
 /* FOOTER */
@@ -149,18 +155,18 @@ footer {
 /* ITEMS */
 
 #items {
-	border-spacing: 0 15px;
+	border-spacing: 0 20px;
 	border-collapse: separate;
 }
 	
 	.item {
-		list-style-type: none;
-		padding: 10px 0;
+		/*list-style-type: none;*/
+		/*padding: 0px 0;*/
 	}
 		
 		.item_score {
 			text-align: right;
-			padding: 10px;
+			padding: 0 10px;
 			font-size: 30px;
 			color: #ff8000;
 			/*background: #eee;*/
