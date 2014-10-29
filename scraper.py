@@ -119,7 +119,7 @@ class Scraper(object):
 			db.session.add(item_data)
 			print "Lost %s because %s" % (item_data.id, item_data.reason), '\n'
 		else:
-			if item_data['type'] in ('story', 'comment', 'poll', 'job'):
+			if ('type' not in item_data) or item_data['type'] in ('story', 'comment', 'poll', 'job'):
 				print "Saving %d" % item_data['id'], '\n'
 				compiled_data = self.compile_item_data(item_data, front_page)
 				item = Item.create_or_update(compiled_data)
@@ -195,7 +195,7 @@ class Scraper(object):
 					item_data['domain'] = item_data['domain'][4:]
 		
 		# Detect broken stories
-		if raw_item['type'] != 'comment' and 'title' not in raw_item:
+		if ('type' not in raw_item) or (raw_item['type'] != 'comment' and 'title' not in raw_item):
 			item_data['deleted'] = True
 		
 		# Set kind and subkind
@@ -205,8 +205,9 @@ class Scraper(object):
 			'story': ['story', 'link'],
 			'poll': ['story', 'poll'],
 			'job': ['story', 'job'],
+			None: ['story', 'link'] # <<< broken item...
 		}
-		item_data['kind'], item_data['subkind'] = item_types[raw_item['type']]
+		item_data['kind'], item_data['subkind'] = item_types[raw_item.get('type', None)]
 		# Special treatment for ask/show stories
 		if item_data['kind'] == 'story' and not item_data.get('deleted', False):
 			if item_data.get('domain', None) is None:
