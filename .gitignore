@@ -1,0 +1,15 @@
+*~
+*.bak
+*.pyc
+
+Thumbs.db
+desktop.ini
+.DS_Store
+
+/backup
+/bower
+/logs
+/venv
+
+/config.py
+

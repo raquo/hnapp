@@ -1,0 +1,249 @@
+
+/* CLEARFIX */
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* make responsive! */
+#all {
+	width: 960px;
+	margin: 0 auto;
+	/*background: #eee;*/
+}
+
+/* GENERAL */
+
+body  {
+	line-height: 1.2;
+}
+
+a {
+	color: #2189eb;
+}
+
+a:visited {
+	color: #b3d2ee;
+}
+
+a:active {
+	color: #ff8000;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/* HEADER */
+
+header {
+	background: #ff8000;
+	margin: 30px 0 30px 0;
+}
+	header form {
+		padding: 10px;
+	}
+	
+		#logo {
+			display: inline-block;
+			float: left;
+			margin: 0;
+			padding: 8px;
+			font-size: 26px;
+			font-weight: bold;
+			color: #ff8000;
+			background: white;
+			text-decoration: none;
+		}
+		
+		#query_wrapper {
+			overflow: hidden;
+			padding: 0 24px 0 10px; /* includes #query's horizontal paddings */
+		}
+		
+			#query {
+				/*display: block;*/
+				border: 2px solid #ff8000;
+				width: 100%;
+				font-size: 18px;
+				padding: 6px;
+				color: #222;
+			}
+			
+			/*#query:focus {
+				outline: 0;
+				border: 2px solid #de5d07;
+			}*/
+		
+		#query_submit {
+			display: block;
+			float: right;
+			padding: 7px 10px;
+			border: 2px solid white;
+			font-size: 18px;
+			font-weight: bold;
+			background: #00db22;
+			color: #107010;
+		}
+		
+		#query_submit:focus,
+		#query_submit:hover {
+			background: #1def1c;
+		}
+	
+	#advanced_search_link {
+		display: inline-block;
+		margin: 2px 0 0 8px;
+		font-size: 12px;
+		font-family: "Verdana";
+		color: white;
+		/*text-decoration: underline dashed;*/
+	}
+
+
+/* FOOTER */
+
+footer {
+	margin-top: 50px;
+	padding: 10px 10px 8px 10px;
+	font-size: 12px;
+	font-family: "Verdana", "sans-serif";
+	background: #ff8000;
+	color: white;
+}
+	
+	footer span + span {
+		margin-left: 20px;
+	}
+	
+	footer a,
+	footer a:visited {
+		color: white;
+	}
+
+
+
+/* SUBSCRIBE */
+
+#subscribe {
+	text-align: center;
+	margin: -5px auto 10px auto;
+	width: 300px;
+	padding: 7px 0 5px 0;
+	background: #51ef5b;
+	color: #107010;
+}
+	
+	#subscribe a {
+		font-weight: bold;
+		color: #107010;
+	}
+
+
+
+
+/* ITEMS */
+
+#items {
+	border-spacing: 0 15px;
+	border-collapse: separate;
+}
+	
+	.item {
+		list-style-type: none;
+		padding: 10px 0;
+	}
+		
+		.item_score {
+			text-align: right;
+			padding: 10px;
+			font-size: 30px;
+			color: #ff8000;
+			/*background: #eee;*/
+		}
+		
+		.item_link {
+			font-size: 120%;
+		}
+		
+		.item_domain {
+			color: #aaa;
+		}
+			
+			.item_domain a {
+				text-decoration: none;
+				color: inherit;
+			}
+		
+		.item_subline {
+			margin-top: 2px;
+			font-size: 90%;
+		}
+
+
+/* FRONT */
+#front {
+	
+}
+	#front_tagline {
+		margin: 42px 0 15px 0;
+	}
+	
+		#front h1,
+		#front h2 {
+			text-align: center;
+			/*background: #ff8000;*/
+			/*color: #CD6600;*/
+			/*color: #ff8000;*/
+			color: #444;
+			/*color: #2189eb;*/
+		}
+		
+		#front h1 {
+			margin-bottom: 10px;
+		}
+		
+		/* <<< move those h1 and h2 together if they're going to be the same */
+		#front h2 {
+			margin: 0px;
+			font-size: 24pt;
+		}
+	
+	#front_lists {
+		margin: 0 40px;
+	}
+		
+		.front_list {
+			width: 440px;
+			float: left;
+			/*margin: 0 20px;*/
+			/*background: #eee;*/
+		}
+			
+			.front_list h3 {
+				font-size: 19pt;
+				margin-bottom: 10px;
+				color: #444;
+			}
+			
+			.front_list ul {
+				list-style-type: none;
+				padding: 0;
+				margin: 0;
+				font-size: 120%;
+			}
+			
+			.front_list li {
+				margin: 5px 0 5px 15px;
+			}
+	
+
+
+
+
+
+

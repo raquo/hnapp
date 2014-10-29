@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /?q=
+Disallow: /rss
