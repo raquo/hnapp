@@ -55,13 +55,6 @@ def timesince(dt, default="just now"):
 
 
 
-@app.before_request
-def remove_trailing_slash():
-	if flask.request.path != '/' and flask.request.path.endswith('/'):
-		return flask.redirect(flask.request.path[:-1])
-
-
-
 def query_url(text_query, output_format=None):
 	url = app.config['HOST_NAME']+'/'
 	if output_format is not None:
