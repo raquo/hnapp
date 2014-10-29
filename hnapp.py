@@ -91,8 +91,6 @@ def route_rss():
 	url_rule = flask.request.url_rule
 	output_format = flask.request.args.get('format', None)
 	
-	print flask.request.path
-	
 	# Parse query if it is set
 	if text_query is not None:
 		query = Search.query(text_query)

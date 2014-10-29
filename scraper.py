@@ -15,6 +15,7 @@ from hnapp import app, db
 from models.item import Item
 from models.lost_item import LostItem
 from models.status import Status
+from utils import debug_print
 from errors import AppError, ScraperError
 
 
@@ -117,14 +118,14 @@ class Scraper(object):
 		# If item was lost
 		if isinstance(item_data, LostItem):
 			db.session.add(item_data)
-			print "Lost %s because %s" % (item_data.id, item_data.reason), '\n'
+			debug_print("Lost %s because %s" % (item_data.id, item_data.reason), '\n')
 		else:
 			if item_data.get('type', None) in ('story', 'comment', 'poll', 'job', None):
-				print "Saving %d" % item_data['id'], '\n'
+				debug_print("Saving %d" % item_data['id'], '\n')
 				compiled_data = self.compile_item_data(item_data, front_page)
 				item = Item.create_or_update(compiled_data)
 			else:
-				print "Skipping %s %d" % (item_data['type'], item_data['id']), '\n'
+				debug_print("Skipping %s %d" % (item_data['type'], item_data['id']), '\n')
 		
 		if update_max_id:
 			Status.set_max_item_id(item_data.id if isinstance(item_data, LostItem) else item_data['id'])
@@ -243,9 +244,11 @@ class Scraper(object):
 		"""
 		Fetch max item id available via HN Firebase API
 		"""
-		print ">> fetch_max_item_id"
+		debug_print(">> fetch_max_item_id")
+		max_id = self.firebase.get('maxitem', None)
+		debug_print(max_id, '\n')
 		
-		return self.firebase.get('maxitem', None)
+		return max_id
 	
 	
 	
@@ -255,7 +258,7 @@ class Scraper(object):
 		Fetch item data by id
 		Might return an instance of LostItem in case of API or HTTP error
 		"""
-		print ">> fetch_item %d" % item_id
+		debug_print(">> fetch_item %d" % item_id)
 		
 		try:
 			item = self.firebase.get('item', item_id)
@@ -285,7 +288,7 @@ class Scraper(object):
 		
 		Failed items might appear as LostItem instances instead of attribute dictionaries
 		"""
-		print ">> fetch_items"
+		debug_print(">> fetch_items")
 		
 		items = {}
 		for item_id in item_ids:
@@ -293,7 +296,7 @@ class Scraper(object):
 			if min_delay > 0:
 				db_item = db.session.query(Item).get(item_id)
 				if db_item is not None and min_delay > (datetime.utcnow() - db_item.date_updated).total_seconds():
-					print "Skipped item %d because it's too fresh" % item_id
+					debug_print("Skipped item %d because it's too fresh" % item_id)
 					continue
 			api_item = self.fetch_item(item_id)
 			items[item_id] = api_item
@@ -310,7 +313,7 @@ class Scraper(object):
 		Fetch stories from top 100 items on front page
 		Ordered by current front page rank
 		"""
-		print ">> fetch_top_story_ids"
+		debug_print(">> fetch_top_story_ids")
 		
 		return self.firebase.get('topstories', None)
 	
