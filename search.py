@@ -210,7 +210,7 @@ class SearchToken(object):
 		elif self.prefix == 'author:':
 			if self.value != '':
 				# print 'ok author'
-				where = (Item.author == self.value)
+				where = (func.lower(Item.author) == self.value.lower())
 			else:
 				# print 'empty author: %s' % self.value
 				return None
@@ -218,7 +218,11 @@ class SearchToken(object):
 		elif self.prefix == 'host:':
 			if self.value != '':
 				# print 'ok host'
-				where = (Item.domain == self.value)
+				if self.value[:4] == 'www.':
+					host = self.value[4:]
+				else:
+					host = self.value
+				where = (Item.domain == host.lower())
 			else:
 				# print 'empty host: %s' % self.value
 				return None

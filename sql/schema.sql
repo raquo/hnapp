@@ -229,6 +229,10 @@ CREATE INDEX index_score ON item USING btree (score);
 CREATE INDEX index_title_tsv ON item USING gin (title_tsv);
 
 
+CREATE INDEX index_author ON item (lower(author));
+
+
+
 --
 -- Name: item_body_tsv_update; Type: TRIGGER; Schema: public; Owner: -
 --
@@ -241,34 +245,6 @@ CREATE TRIGGER item_body_tsv_update BEFORE INSERT OR UPDATE ON item FOR EACH ROW
 --
 
 CREATE TRIGGER item_title_tsv_update BEFORE INSERT OR UPDATE ON item FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('title_tsv', 'pg_catalog.english', 'title');
-
-
---
--- Name: public; Type: ACL; Schema: -; Owner: -
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
---
--- Name: kind; Type: ACL; Schema: public; Owner: -
---
-
-REVOKE ALL ON TYPE kind FROM PUBLIC;
-REVOKE ALL ON TYPE kind FROM raquo;
-GRANT ALL ON TYPE kind TO PUBLIC;
-
-
---
--- Name: subkind; Type: ACL; Schema: public; Owner: -
---
-
-REVOKE ALL ON TYPE subkind FROM PUBLIC;
-REVOKE ALL ON TYPE subkind FROM raquo;
-GRANT ALL ON TYPE subkind TO PUBLIC;
 
 
 --
