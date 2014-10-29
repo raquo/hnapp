@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block main %}
+	
+<div id='all'>
+	
+	{% include 'header.html' %}
+	
+	<main>
+		
+		
+		<h1>Status</h1>
+		<table id='statuses'>
+			{% for status in statuses %}
+			<tr class='status'>
+				<td class=''>{{ status.name }}</td>
+				<td class=''>{{ status.number or status.text or status.date }}</td>
+			</tr>
+			{% endfor %}
+			<tr class='status'>
+				<td class=''>max_item_id</td>
+				<td class=''>{{ max_item_id }}</td>
+			</tr>
+			<tr class='status'>
+				<td class=''>min_item_id</td>
+				<td class=''>{{ min_item_id }}</td>
+			</tr>
+			<tr class='status'>
+				<td class=''>item_count</td>
+				<td class=''>{{ item_count }} ({{ max_item_id - min_item_id - item_count }} missing)</td>
+			</tr>
+			<tr class='status'>
+				<td class=''>lost_item_ids</td>
+				<td class=''>{{ lost_item_ids }}</td>
+			</tr>
+		</table>
+		
+		
+		
+	</main>
+	
+	{% include 'footer.html' %}
+	
+</div>
+	
+{% endblock %}
+
+

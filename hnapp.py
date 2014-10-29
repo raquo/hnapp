@@ -2,15 +2,14 @@
 
 import flask
 import flask.ext.sqlalchemy
+import sqlalchemy
+
 # import PyRSS2Gen
 # from feedgen.feed import FeedGenerator
 # from datetime import datetime
 from werkzeug.contrib.atom import AtomFeed
 # from utils import UTC
 import urllib
-
-# import sqlalchemy
-# from sqlalchemy import func
 
 app = flask.Flask(__name__,
 	template_folder='templates',
@@ -22,6 +21,8 @@ app.config.from_pyfile('config.py')
 db = flask.ext.sqlalchemy.SQLAlchemy(app)
 
 from models.item import Item
+from models.lost_item import LostItem
+from models.status import Status
 from search import Search
 
 from urlparse import urljoin
@@ -153,6 +154,24 @@ def route_rss():
 	# 	entry.guid(item.comments_url())
 	# 	entry.published(published=item.date_posted.replace(tzinfo=UTC()))
 	# return feed.rss_str(pretty=True)
+
+
+@app.route('/status', methods=['GET'])
+def route_status():
+	statuses = db.session.query(Status).all()
+	max_item_id = db.engine.execute(sqlalchemy.sql.text('SELECT MAX(id) FROM item')).scalar()
+	min_item_id = db.engine.execute(sqlalchemy.sql.text('SELECT MIN(id) FROM item')).scalar()
+	item_count  = db.engine.execute(sqlalchemy.sql.text('SELECT COUNT(*) FROM item')).scalar()
+	lost_item_ids = db.session.query(LostItem.id).all() # db.engine.execute(sqlalchemy.sql.text('SELECT id FROM lost_item ORDER BY id DESC')).scalar()
+	page_data = {
+		'title': u'hnapp – Status',
+		'statuses': statuses,
+		'max_item_id': max_item_id,
+		'min_item_id': min_item_id,
+		'item_count': item_count,
+		'lost_item_ids': ', '.join([str(item[0]) for item in lost_item_ids])
+		}
+	return flask.render_template('status.html', **page_data)
 
 
 @app.route('/test', methods=['GET'])

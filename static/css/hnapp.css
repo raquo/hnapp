@@ -155,7 +155,7 @@ footer {
 /* ITEMS */
 
 #items {
-	border-spacing: 0 20px;
+	border-spacing: 0 20px; /* order: — | */
 	border-collapse: separate;
 }
 	
@@ -246,10 +246,18 @@ footer {
 			.front_list li {
 				margin: 5px 0 5px 15px;
 			}
+
+
+/* STATUSES */
+
+#statuses {
+	border-spacing: 20px 15px; /* order: — | */
+	border-collapse: separate;
+}
 	
-
-
-
+	.status {
+		vertical-align: top;
+	}
 
 
 
