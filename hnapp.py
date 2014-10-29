@@ -88,14 +88,16 @@ def route_rss():
 	if text_query is not None:
 		query = Search.query(text_query)
 		items = query.all()
+		title = u'%s – hnapp' % (text_query if len(text_query) > 0 else 'all')
 	else:
 		query = None
 		items = None
+		title = u'hnapp – Filter Hacker News. Get via web, RSS or JSON'
 	
 	# Web page
 	if flask.request.path == '/':
 		page_data = {
-			'title': u'hnapp – Filter Hacker News. Get via web, RSS or JSON',
+			'title': title,
 			'query': text_query,
 			'items': items,
 			'rss_url': query_url(text_query, output_format='rss'), # flask.request.url + '&format=rss', # <<< !!!
