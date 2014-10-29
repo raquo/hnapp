@@ -190,7 +190,7 @@ class Scraper(object):
 				item_data['domain'] = None
 			else:
 				parsed_url = urlparse(item_data['url'])
-				item_data['domain'] = parsed_url.hostname
+				item_data['domain'] = parsed_url.hostname.lower()
 				if item_data['domain'][:4] == 'www.':
 					item_data['domain'] = item_data['domain'][4:]
 		
