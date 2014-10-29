@@ -24,12 +24,17 @@ def test():
 
 
 @manager.command
+def init():
+	s = Scraper()
+        s.connect()
+	s.save_newest_items()
+
+@manager.command
 def every_1_min():
 	
 	minute = datetime.utcnow().minute
 	s = Scraper()
 	s.connect()
-	
 	
 	if minute % 2 == 0:
 		# print "2 MIN"
