@@ -258,7 +258,12 @@ class Scraper(object):
 		print ">> fetch_item %d" % item_id
 		
 		try:
-			return self.firebase.get('item', item_id)
+			item = self.firebase.get('item', item_id)
+			if item is None:
+				item = LostItem(id=item_id,
+								reason='null'
+								)
+			return item
 		except requests.exceptions.HTTPError as e:
 			# If API error encountered, return a LostItem instead
 			lost_item = db.session.query(LostItem).get(item_id)
