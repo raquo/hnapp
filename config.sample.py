@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import urllib
 
 
 # -----------------------------
@@ -17,6 +18,6 @@ HOST_NAME = ''
 
 # Database connection string in the format engine://db_user:db_password@db_server/db_name
 # Documentation: http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html
-SQLALCHEMY_DATABASE_URI = ''
+SQLALCHEMY_DATABASE_URI = 'engine://db_user:%s@db_server/db_name' % urllib.quote_plus('password')
 
 
