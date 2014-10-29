@@ -195,7 +195,7 @@ class Scraper(object):
 					item_data['domain'] = item_data['domain'][4:]
 		
 		# Detect broken stories
-		if raw_item.get('type', None) != 'comment' and 'title' not in raw_item):
+		if raw_item.get('type', None) != 'comment' and 'title' not in raw_item:
 			item_data['deleted'] = True
 		
 		# Set kind and subkind
