@@ -107,7 +107,7 @@ def route_rss():
 	
 	# RSS
 	elif flask.request.path == '/rss' and query is not None:
-		feed = AtomFeed(title=(u'hnapp: %s' % (text_query if text_query != '' else 'all')).encode('ascii', 'xmlcharrefreplace'),
+		feed = AtomFeed(title=title.encode('ascii', 'xmlcharrefreplace'),
 						title_type='text',
 						feed_url=query_url(text_query, output_format='rss'),
 						author='via hnapp',
