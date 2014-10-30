@@ -140,7 +140,7 @@ header {
 /* FOOTER */
 
 footer {
-	margin-top: 50px;
+	margin: 50px 0 30px 0;
 	padding: 10px 10px 8px 10px;
 	font-size: 12px;
 	font-family: "Verdana", "sans-serif";
@@ -166,13 +166,14 @@ footer {
 	margin: -5px auto 10px auto;
 	width: 300px;
 	padding: 7px 0 5px 0;
-	background: #51ef5b;
+	background: #93ff9a;
 	color: #107010;
+	color: #2d8733;
 }
 	
 	#subscribe a {
 		font-weight: bold;
-		color: #107010;
+		color: #2d8733;
 	}
 
 
@@ -264,7 +265,12 @@ footer {
 			.front_list li {
 				margin: 5px 0 5px 15px;
 			}
-
+	
+	#feedback {
+		color: #444;
+		margin-top: 45px;
+		text-align: center;
+	}
 
 /* STATUSES */
 
