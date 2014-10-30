@@ -68,7 +68,7 @@ def query_url(text_query, output_format=None):
 @app.route('/rss', methods=['GET'])
 @app.route('/json', methods=['GET'])
 @app.route('/', methods=['GET'])
-def route_rss():
+def route_search():
 	
 	# <<< Shall we split this into three routes?
 	
@@ -96,7 +96,7 @@ def route_rss():
 			'rss_url': query_url(text_query, output_format='rss'), # flask.request.url + '&format=rss', # <<< !!!
 			'json_url': query_url(text_query, output_format='json') #flask.request.url + '&format=rss' # <<< !!!
 			}
-		return flask.render_template('home.html', **page_data)
+		return flask.render_template('search.html', **page_data)
 	
 	# RSS
 	elif flask.request.path == '/rss' and query is not None:

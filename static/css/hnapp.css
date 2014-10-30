@@ -94,6 +94,9 @@ header {
 		#query_submit:hover {
 			background: #1def1c;
 		}
+
+
+	/* SYNTAX*/
 	
 	#syntax_toggle {
 		display: inline-block;
@@ -105,8 +108,31 @@ header {
 	}
 	
 	#syntax {
+		/*background: #ffd92f;*/
 		display: none;
+		color: white;
+		font-family: "Verdana", sans-serif;
+		font-size: 90%;
+		line-height: 1.5;
+		padding-left: 8px;
 	}
+		#syntax a {
+			/*margin: 0 10px;*/
+			/*color: #c56e24;*/
+			color: white;
+			text-decoration: none;
+		}
+		
+		#syntax ul {
+			list-style-type: none;
+			padding: 0;
+			margin-bottom: 0px;
+			float: left;
+		}
+		
+		#syntax ul +ul {
+			margin-left: 50px;
+		}
 	
 	
 
@@ -199,32 +225,24 @@ footer {
 		margin: 42px 0 15px 0;
 	}
 	
-		#front h1,
-		#front h2 {
-			text-align: center;
-			/*background: #ff8000;*/
-			/*color: #CD6600;*/
-			/*color: #ff8000;*/
-			color: #444;
-			/*color: #2189eb;*/
-		}
-		
 		#front h1 {
-			margin-bottom: 10px;
+			text-align: center;
+			line-height: 160%;
+			color: #444;
+			margin: 55px 0 30px 0;
 		}
 		
-		/* <<< move those h1 and h2 together if they're going to be the same */
-		#front h2 {
-			margin: 0px;
-			font-size: 24pt;
-		}
-	
 	#front_lists {
-		margin: 0 40px;
+		margin-left: 17%;
 	}
+		.front_list:first-child {
+			width: auto;
+			margin-right: 100px;
+		}
 		
 		.front_list {
-			width: 440px;
+			width: 50%;
+			/*width: 420px;*/
 			float: left;
 			/*margin: 0 20px;*/
 			/*background: #eee;*/

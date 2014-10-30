@@ -1,13 +1,35 @@
 
 <header>
 	<form class='clearfix' method='get' action='/'>
-		<a href='/' id='logo'>hnapp<a>
+		<a href='/' id='logo'>hnapp</a>
 		<button id='query_submit' type='submit' tabindex='2'>Search</button>
 		<div id='query_wrapper'>
 			<input id='query' name='q' type='text' value='{{ query if query is not none else '' }}' tabindex='1' placeholder='Enter search query, e.g.   twitter | facebook score>10 host:techcrunch.com' />
-			<a href='#' id='syntax_toggle' tabindex='3'>Advanced search: filter by points, author, domain, etc.</a>
-			<div id='syntax'>
-				Syntax definitions here...
+			<a href='#' id='syntax_toggle' tabindex='3'>Advanced search: filter by author, host, score, etc.</a>
+			<div id='syntax' class='clearfix'>
+				<ul>
+					<li><a href='/?q=author:jacquesm#showsyntax'><b>author:</b>jacquesm</a></li>
+					<li><a href='/?q=host:github.com#showsyntax'><b>host:</b>github.com</a></li>
+					<li><a href='/?q=type:ask#showsyntax'><b>type:</b>ask</a> &nbsp;
+						<i>(also –
+							<a href='/?q=type:show#showsyntax'>show</a>,
+							<a href='/?q=type:link#showsyntax'>link</a>,
+							<a href='/?q=type:poll#showsyntax'>poll</a>,
+							<a href='/?q=type:job#showsyntax'>job</a>)
+						</i>
+					</li>
+					<li><a href='/?q=score&gt;100#showsyntax'><b>score&gt;</b>100</a></li>
+					<li><a href='/?q=comments&gt;50#showsyntax'><b>comments&gt;</b>50</a></li>
+					<li><a href='/?q=type%3Ashow+%7C+type%3Aask#showsyntax'>type:show <b>|</b> type:ask</li>
+					<li><a href='/?q=-host:techcrunch.com#showsyntax'><b>-</b>host:techcrunch.com</a></li>
+				</ul>
+				<ul>
+					<li style='margin-left: -10px;'><b>Examples:</b></li>
+					<li><a href='/?q=meteor+%7C+meteorjs+type%3Ashow+%7C+host%3Agithub.com#showsyntax'>meteor | meteorjs &nbsp;type:show | host:github.com</a></li>
+					<li><a href='/?q=score&gt;100+comments&gt;10#showsyntax'>score&gt;100 comments&lt;10</a></li>
+					<li><a href='/?q=YC+-host:ycombinator.com#showsyntax'>YC -host:ycombinator.com</a></li>
+					<li><a href='/?q=hiring+%7C+type%3Ajob#showsyntax'>hiring | type:job</a></li>
+				</ul>
 			</div>
 		</div>
 	</form>
