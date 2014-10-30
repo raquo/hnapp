@@ -5,6 +5,9 @@ init();
 
 function init()
 {
+	// Auto-focus query field
+	elById('query').focus();
+	
 	// Enable toggle of syntax panel
 	document.getElementById('syntax_toggle').onclick = function()
 	{
