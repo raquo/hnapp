@@ -6,8 +6,9 @@
 	<meta name='author' content='Nikita Gazarov' />
 	<link rel='stylesheet' href='/css/normalize.css' />
 	<link rel='stylesheet' href='/css/hnapp.css' />
+	<!-- Not enough jQuery! D: -->
 	{% if query is not none -%}
-		<link rel='alternate' type='application/rss+xml' title='{{ title }}' href='/rss?q={{ query }}' />
+		<link rel='alternate' type='application/rss+xml' title='{{ title }}' href='{{ rss_url }}' />
 	{%- endif %}
 </head>
 <body>
