@@ -94,7 +94,8 @@ def route_search():
 			'query': text_query,
 			'items': items,
 			'rss_url': query_url(text_query, output_format='rss'), # flask.request.url + '&format=rss', # <<< !!!
-			'json_url': query_url(text_query, output_format='json') #flask.request.url + '&format=rss' # <<< !!!
+			'json_url': query_url(text_query, output_format='json'), #flask.request.url + '&format=rss' # <<< !!!
+			'ga_id': app.config['GA_ID']
 			}
 		return flask.render_template('search.html', **page_data)
 	
@@ -139,7 +140,8 @@ def route_status():
 		'max_item_id': max_item_id,
 		'min_item_id': min_item_id,
 		'item_count': item_count,
-		'lost_item_ids': ', '.join([str(item[0]) for item in lost_item_ids])
+		'lost_item_ids': ', '.join([str(item[0]) for item in lost_item_ids]),
+		'ga_id': app.config['GA_ID']
 		}
 	return flask.render_template('status.html', **page_data)
 
@@ -147,19 +149,19 @@ def route_status():
 
 @app.errorhandler(404)
 def error(e):
-	return flask.render_template('error.html', error=u'404 – Page Not Found'), 404
+	return flask.render_template('error.html', error=u'404 – Page Not Found', ga_id=app.config['GA_ID']), 404
 
 
 
 @app.errorhandler(403)
 def error(e):
-	return flask.render_template('error.html', error=u'403 – Access Denied'), 403
+	return flask.render_template('error.html', error=u'403 – Access Denied', ga_id=app.config['GA_ID']), 403
 
 
 
 @app.errorhandler(500)
 def error(e):
-	return flask.render_template('error.html', error=u'500 – Internal Server Error'), 500
+	return flask.render_template('error.html', error=u'500 – Internal Server Error', ga_id=app.config['GA_ID']), 500
 
 
 

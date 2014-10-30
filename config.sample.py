@@ -16,6 +16,10 @@ DEBUG = True
 HOST_NAME = ''
 
 
+# Google Analytics ID (UA-XXXXXXXX-X). Set to None to disable tracking
+GA_ID = None
+
+
 # Database connection string in the format engine://db_user:db_password@db_server/db_name
 # Documentation: http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html
 SQLALCHEMY_DATABASE_URI = 'engine://db_user:%s@db_server/db_name' % urllib.quote_plus('password')
