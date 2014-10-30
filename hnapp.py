@@ -85,7 +85,7 @@ def route_search():
 	else:
 		query = None
 		items = None
-		title = u'hnapp – Filter Hacker News. Get via web, RSS or JSON'
+		title = u'hnapp – Search Hacker News, subscribe via RSS or JSON'
 	
 	# Web page
 	if flask.request.path == '/':
