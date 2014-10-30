@@ -31,6 +31,7 @@ class Scraper(object):
 		"""
 		Connect to firebase API
 		You must call this before using the API
+		<<< TODO: call this from constructor
 		"""
 		if not self.firebase:
 			self.firebase = firebase.FirebaseApplication(self.base_url, None)

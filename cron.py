@@ -29,6 +29,29 @@ def init():
 	s.connect()
 	s.save_newest_items()
 
+
+@manager.command
+def update(from_id, to_id, backsort):
+	"""
+	Update items between given ids. Use this to fetch older data.
+	"""
+	
+	if from_id is None or not from_id.isdigit() or to_id is None or not to_id.isdigit() or backsort not in ('0', '1'):
+		print "Error. Expected parameters from_hn_id to_hn_id backsort (0 or 1)"
+		return
+	
+	s = Scraper()
+	s.connect()
+	
+	# Fetch and save items
+	save = lambda item_data: s.save_item(item_data)
+	item_ids = range(int(from_id), int(to_id))
+	if backsort == '1':
+		item_ids = reversed(item_ids)
+	s.fetch_items(item_ids, callback=save)
+	
+
+
 @manager.command
 def every_1_min():
 	
