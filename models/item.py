@@ -272,7 +272,7 @@ class Item(sqlalchemy.ext.declarative.declarative_base()):
 		
 		title = (u'%d – %s' % (self.score, self.title)).encode('ascii', 'xmlcharrefreplace')
 		points_label = str(self.score) + (' point' if self.score % 10 == 1 else ' points')
-		comments_label = str(self.num_comments) + (' comment' if self.num_comments % 10 == 1 else ' comments')
+		comments_label = str(self.num_comments) + ' comment' + ('s' if self.num_comments != 1 else '')
 		comments_url = self.comments_url().encode('ascii', 'xmlcharrefreplace')
 		description = ('<p>%s, <a href="%s">%s</a></p>' % (points_label, comments_url, comments_label)) \
 					  .encode('ascii', 'xmlcharrefreplace')
