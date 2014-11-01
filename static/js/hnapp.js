@@ -11,7 +11,7 @@ function init()
 	
 	
 	// Enable toggle of syntax panel
-	document.getElementById('syntax__toggle').onclick = function()
+	document.getElementById('syntax__toggle').onclick = function(ev)
 	{
 		removeClass(slider, 'syntax__slider--init');
 		
@@ -27,6 +27,7 @@ function init()
 			removeClass(slider, 'syntax__slider--hide');
 			window.location.hash = '#showsyntax';
 		}
+		
 		return false;
 	}
 	
@@ -34,6 +35,7 @@ function init()
 	if (window.location.hash === '#showsyntax')
 	{
 		addClass(slider, 'syntax__slider--show');
+		removeClass(slider, 'syntax__slider--init');
 	}
 	else
 	{

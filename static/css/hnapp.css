@@ -184,7 +184,7 @@ header {
 	
 	.syntax__slider--hide {
 		margin-top: -200px;
-		/*transition: 0.2s;*/
+		transition: 0.2s;
 		opacity: 0;
 	}
 	
@@ -194,6 +194,7 @@ header {
 	}
 	
 	.syntax__slider--init {
+		display: none;
 		transition-duration: 0s;
 	}
 	
@@ -467,12 +468,8 @@ footer {
 			
 			.syntax__slider--hide {
 				margin-top: -300px;
-				/* opacity: 1; /* disable opacity animation on mobile */
-				transition: none; /* disable hide-animation on mobile to avoid flicker on load */
-			}
-			
-			.syntax__slider--hide {
-				transition: none;
+				opacity: 1; /* disable opacity animation on mobile */
+				/*transition: none; /* disable hide-animation on mobile to avoid flicker on load */
 			}
 			
 			.syntax__list,
