@@ -11,13 +11,18 @@ manager = flask.ext.script.Manager(app)
 
 @manager.command
 def test():
-	from search import Search
+	from scraper import Scraper
+	s = Scraper()
+	s.connect()
+	s.save_item(s.fetch_item(8281522));
 	
-	# print Search.token_tree('hello world'.split()), "\n";
-	print Search.token_tree('| | AA | BB | CC | | | | DD | EE |'.split()), "\n";
-	print Search.token_tree('hello the -world host:cnn.com | a | the author:raquo'.split()), "\n";
-	token_tree = Search.token_tree('| | | hello -world - a host:cnn.com | | host:techcrunch.com author:raquo | | |'.split()), "\n";
-	print token_tree
+	# from search import Search
+	
+	# # print Search.token_tree('hello world'.split()), "\n";
+	# print Search.token_tree('| | AA | BB | CC | | | | DD | EE |'.split()), "\n";
+	# print Search.token_tree('hello the -world host:cnn.com | a | the author:raquo'.split()), "\n";
+	# token_tree = Search.token_tree('| | | hello -world - a host:cnn.com | | host:techcrunch.com author:raquo | | |'.split()), "\n";
+	# print token_tree
 	# token_tree.filter()
 	
 	return

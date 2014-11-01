@@ -162,7 +162,6 @@ class Scraper(object):
 			'parent': 'parent_id',
 			'type': 'kind',
 			'title': 'title',
-			'url': 'url',
 			'text': 'raw_body',
 			'by': 'author',
 			'score': 'score',
@@ -186,7 +185,7 @@ class Scraper(object):
 			item_data['body'] = self.bleach_html(raw_item['text'])
 		
 		# Set (or unset) URL and domain
-		if 'url' in item_data:
+		if 'url' in item_data and item_data['url'] is not None:
 			if len(item_data['url']) == 0:
 				item_data['url'] = None
 				item_data['domain'] = None
