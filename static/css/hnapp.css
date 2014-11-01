@@ -106,8 +106,9 @@ header {
 		#header__searchbox__input {
 			box-sizing: border-box;
 			border: 0;
-			padding: 6px 9px;
+			padding: 0 9px;
 			width: 100%;
+			height: 33px;
 			font-size: 18px;
 			color: #222;
 		}
@@ -120,9 +121,11 @@ header {
 	
 	#header__submit {
 		display: block;
+		box-sizing: border-box;
 		float: right;
-		padding: 6px 7px 4px 7px;
+		padding: 2px 7px 0 7px;
 		margin: 5px 0 0 8px;
+		height: 33px;
 		font-size: 17px;
 		font-weight: bold;
 		background: #86cfff;
@@ -388,13 +391,13 @@ footer {
 			position: relative;
 			background: #ff3e00;
 			padding-top: 7px;
-			padding-bottom: 24px;
+			padding-bottom: 23px;
 			z-index: 1;
 		}
 			
 			#header__logo__symbol {
-				top: 11px;
-				left: 14px;
+				top: 10px;
+				left: 13px;
 				background: white;
 				border-color: #ff3e00;
 			}
@@ -413,7 +416,8 @@ footer {
 		
 		#header__submit {
 			margin: 0;
-			padding: 12px 8px 10px 8px;
+			padding: 2px 8px 0 8px;
+			height: 47px;
 			border-width: 4px;
 		}
 			
@@ -471,14 +475,14 @@ footer {
 	
 	#items {
 		margin-top: 10px;
-		border-spacing: 0 15px; /* order: — | */
+		border-spacing: 5px 15px; /* order: — | */
 	}
 		.item__link {
-			font-size: 130%;
+			font-size: 140%;
 		}
 		
 		.item__score {
-			padding: 0 5px;
+			padding: 0 5px 0 0;
 			font-size: 18px;
 		}
 			
