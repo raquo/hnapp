@@ -5,7 +5,10 @@
 			<span id='header__logo__symbol'></span>
 			<span id='header__logo__text'>hnapp</span>
 		</a>
-		<button id='header__submit' type='submit' tabindex='2'>Search</button>
+		<button id='header__submit' type='submit' tabindex='2'>
+			<span id='header__submit__text--full'>Search</span>
+			<span id='header__submit__text--compact'>Go</span>
+		</button>
 		
 		<div id='header__searchbox'>
 			<input id='header__searchbox__input' name='q' type='text' value='{{ query if query is not none else '' }}' tabindex='1' placeholder='Enter search query, e.g.   twitter | facebook score>10 host:techcrunch.com' />
@@ -34,7 +37,7 @@
 			</ul>
 			<ul class='syntax__list'>
 				<li class='syntax__list__title'><b>Examples</b></li>
-				<li><a href='/?q=meteor+%7C+meteorjs+type%3Ashow+%7C+host%3Agithub.com#showsyntax'>meteor | meteorjs &nbsp;type:show | host:github.com</a></li>
+				<li><a href='/?q=meteor+type%3Ashow+%7C+host%3Agithub.com#showsyntax'>meteor &nbsp;type:show | host:github.com</a></li>
 				<li><a href='/?q=score%3E100+comments%3E10#showsyntax'>score&gt;100 comments&lt;10</a></li>
 				<li><a href='/?q=YC+-host:ycombinator.com#showsyntax'>YC -host:ycombinator.com</a></li>
 				<li><a href='/?q=hiring+%7C+type%3Ajob+%7C+author%3Awhoishiring#showsyntax'>hiring | type:job | author:whoishiring</a></li>

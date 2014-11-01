@@ -137,6 +137,14 @@ header {
 			background: #2992d5;
 			color: #b5e1ff;
 		}
+		
+		#header__submit__text--full {
+			display: inline;
+		}
+		
+		#header__submit__text--compact {
+			display: none;
+		}
 
 
 
@@ -262,7 +270,7 @@ footer {
 			padding: 0 10px;
 			font-size: 30px;
 			color: #ff3e00;
-			/*background: #eee;*/
+			background: #eee;
 		}
 		
 		.item__link {
@@ -349,4 +357,71 @@ footer {
 	}
 
 
+
+
+
+
+@media all and (max-width: 800px) {
+	
+	
+	/* HEADER */
+	
+	header {
+		margin: 0px;
+	}
+		#header__logo {
+			position: relative;
+			background: #ff3e00;
+			padding-bottom: 20px;
+			z-index: 1;
+		}
+			
+			#header__logo__symbol {
+				top: 11px;
+				left: 12px;
+				background: white;
+				border-color: #ff3e00;
+			}
+				
+				#header__logo__symbol::before {
+					background: white;
+				}
+			
+			#header__logo__text {
+				display: none;
+			}
+		
+		#header__submit {
+			margin: 0;
+			padding: 10px 6px 8px 6px;
+			border-width: 4px;
+		}
+			
+			#header__submit__text--full {
+				display: none;
+			}
+			
+			#header__submit__text--compact {
+				display: inline;
+			}
+	
+	
+	/* SYNTAX */
+	
+	#syntax {
+		margin: 0;
+		text-align: center;
+	}
+		
+		#syntax__content {
+			text-align: left;
+			padding: 0px 10px 20px 10px;
+			font-size: 85%;
+		}
+			
+			.syntax__list,
+			.syntax__list + .syntax__list {
+				margin: 10px 0 0 10px;
+			}
+}
 
