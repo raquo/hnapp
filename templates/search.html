@@ -27,7 +27,7 @@
 						{%- endif %}
 						
 						<div class='item__subline'>
-							by <a href='/?q=author:{{ item.author }}'>{{ item.author }}</a>
+							by <a href='{{ item.author_url() }}'>{{ item.author }}</a>
 							{{ item.date_posted|time_since }} –
 							<a href='{{ item.comments_url() }}'>{{ item.num_comments }} comment{% if item.num_comments != 1 %}s{% endif %}</a>
 						</div>

@@ -255,6 +255,13 @@ class Item(sqlalchemy.ext.declarative.declarative_base()):
 		return 'https://news.ycombinator.com/item?id=%d' % (self.id)
 	
 	
+	def author_url(self):
+		"""
+		Return Hacker News author link
+		"""
+		return 'https://news.ycombinator.com/user?id=%s' % (self.author)
+	
+	
 	def main_url(self):
 		"""
 		Return Link URL if Item has it, or Hacker News comments link otherwise
