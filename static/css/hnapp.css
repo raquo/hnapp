@@ -26,6 +26,10 @@ input, button,
 .no-outline {
 	line-height: 1;
 	outline: 0;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border-radius: 0;
 }
 
 input::-moz-focus-inner, button::-moz-focus-inner,
@@ -307,14 +311,23 @@ footer {
 	.tagline--compact {
 		display: none;
 	}
-		
+
 #features {
-	margin-left: 17%;
+	display: table;
+	margin: 0 auto;
 }
 	
-	.feature {
-		width: 50%;
+	/*.feature__column {
+		box-sizing: border-box;
+	}*/
+	
+	.feature__column:first-child {
 		float: left;
+	}
+	
+	.feature__column:last-child {
+		float: right;
+		margin-left: 60px;
 	}
 		
 		.feature__title {
@@ -374,14 +387,14 @@ footer {
 		#header__logo {
 			position: relative;
 			background: #ff3e00;
-			padding-top: 5px;
-			padding-bottom: 22px;
+			padding-top: 7px;
+			padding-bottom: 24px;
 			z-index: 1;
 		}
 			
 			#header__logo__symbol {
 				top: 11px;
-				left: 12px;
+				left: 14px;
 				background: white;
 				border-color: #ff3e00;
 			}
@@ -394,9 +407,13 @@ footer {
 				display: none;
 			}
 		
+		#header__searchbox {
+			padding: 7px;
+		}
+		
 		#header__submit {
 			margin: 0;
-			padding: 10px 6px 9px 6px;
+			padding: 12px 8px 10px 8px;
 			border-width: 4px;
 		}
 			
@@ -456,6 +473,9 @@ footer {
 		margin-top: 10px;
 		border-spacing: 0 15px; /* order: — | */
 	}
+		.item__link {
+			font-size: 130%;
+		}
 		
 		.item__score {
 			padding: 0 5px;
@@ -488,31 +508,52 @@ footer {
 		}
 			
 	#features {
-		margin-left: 0;
-		padding: 10px;
+		/*margin-left: 0;*/
+		box-sizing: border-box;
+		/*max-width: 70%;*/
+		min-width: 480px;
+		padding: 5px 10px;
 	}
-		.feature {
-			white-space: nowrap;
+		.feature__title {
+			font-size: 19px;
 		}
+		
+		.feature__list {
+			font-size: 18px;
+		} 
+		
+		@media (max-width: 550px) and (min-width: 479px) {
+			#features {
+				width: 100%;
+			}
+			.feature__column:last-child {
+				margin-left: 10px;
+			}
+			.feature__list {
+				font-size: 16px;
+			}
+		}
+		
+		@media (max-width: 479px) {
 			
-			@media (max-width: 479px) {
-				.feature {
-					float: none;
-					margin-left: 20px;
+			#features {
+				min-width: 0;
+			}
+			
+			.feature__column:first-child,
+			.feature__column:last-child {
+				float: none;
+				margin-left: 0;
+			}
+				
+				.feature__title {
+					margin: 25px 0 5px 0;
 				}
-					
-					.feature__title {
-						margin: 20px 0 5px 0;
-					}
-			}
-			
-			.feature__title {
-				font-size: 19px;
-			}
-			
+		}
+		
 	#feedback {
-		margin: 20px 0 -10px 0;
-		font-size: 19px;
+		margin: 25px 0 -10px 0;
+		font-size: 18px;
 	}
 	
 	
@@ -522,6 +563,7 @@ footer {
 		display: block;
 		line-height: 2;
 		margin-bottom: 0;
+		padding-bottom: 9px;
 	}
 	
 	.footer__text,
