@@ -60,10 +60,13 @@ header {
 }
 	
 	#header__logo {
+		position: relative;
 		display: inline-block;
 		float: left;
-		padding: 4px 9px 6px 0;
+		z-index: 1;
+		padding: 5px 5px 5px 9px;
 		text-decoration: none;
+		background: #ff3e00;
 	}
 	
 		#header__logo__symbol {
@@ -73,14 +76,14 @@ header {
 				left: 4px;
 			width: 6px;
 			height: 6px;
-			border: 4px solid white;
+			border: 4px solid #ff3e00;
 			border-radius: 2px;
 			margin-right: 11px;
-			background: #ff3e00;
+			background: white;
 		}
 			
 			#header__logo__symbol::before {
-				background: #ff3e00;
+				background: white;
 				content: " ";
 				position: absolute;
 				z-index: -1;
@@ -94,7 +97,7 @@ header {
 		#header__logo__text {
 			font-size: 28px;
 			font-weight: bold;
-			color: #ff3e00;
+			color: white;
 		}
 	
 	#header__searchbox {
@@ -124,19 +127,20 @@ header {
 		box-sizing: border-box;
 		float: right;
 		padding: 2px 7px 0 7px;
-		margin: 5px 0 0 8px;
-		height: 33px;
+		/*margin: 5px 0 0 8px;*/
+		height: 43px;
 		font-size: 17px;
 		font-weight: bold;
 		background: #86cfff;
-		border: 3px solid #39a3e9;
+		border: 0;
+		/*border: 3px solid #39a3e9;*/
 		color: #107fc7;
 	}
 		
 		#header__submit:focus,
 		#header__submit:hover {
 			background: #b5e1ff;
-			border-color: #2992d5;
+			/*border-bottom: 4px solid #2992d5;*/
 		}
 		
 		/* <<< TODO: This should be JS-ed so that it highlights on Enter-typed form submit */
@@ -404,37 +408,26 @@ footer {
 		margin: 0px;
 	}
 		#header__logo {
-			position: relative;
-			background: #ff3e00;
-			padding-top: 7px;
-			padding-bottom: 24px;
-			z-index: 1;
+			padding-right: 7px;
+			padding-bottom: 25px;
 		}
 			
 			#header__logo__symbol {
-				top: 10px;
-				left: 13px;
-				background: white;
-				border-color: #ff3e00;
+				top: 12px;
+				left: 5px;
 			}
-				
-				#header__logo__symbol::before {
-					background: white;
-				}
 			
 			#header__logo__text {
 				display: none;
 			}
 		
 		#header__searchbox {
-			padding: 7px;
+			padding: 7px 7px 7px 2px;
 		}
 		
 		#header__submit {
-			margin: 0;
-			padding: 2px 8px 0 8px;
 			height: 47px;
-			border-width: 4px;
+			width: 47px;
 		}
 			
 			#header__submit__text--full {
@@ -473,7 +466,8 @@ footer {
 			
 			.syntax__slider--hide {
 				margin-top: -300px;
-				opacity: 1; /* disable opacity animation on mobile */
+				/* opacity: 1; /* disable opacity animation on mobile */
+				transition: 0s; /* disable hide-animation on mobile to avoid flicker on load */
 			}
 			
 			.syntax__list,
