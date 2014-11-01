@@ -470,6 +470,10 @@ footer {
 				transition: none; /* disable hide-animation on mobile to avoid flicker on load */
 			}
 			
+			.syntax__slider--hide {
+				transition: none;
+			}
+			
 			.syntax__list,
 			.syntax__list + .syntax__list {
 				margin: 10px 0 0 10px;
