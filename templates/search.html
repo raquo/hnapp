@@ -2,31 +2,31 @@
 
 {% block main %}
 	
-<div id='all'>
+<main>
 	
 	{%- include 'header.html' -%}
 	
-	<main>
+	<section>
 		
 		{% if query is none -%}
 			{%- include 'front.html' -%}
 		{%- else -%}
 			<div id='subscribe'>
-				Subscribe to this search:&nbsp; <a href='{{ rss_url }}'>RSS</a>, <a href='{{ json_url }}'>JSON</a>
+				<span>Subscribe to this search:&nbsp; <a href='{{ rss_url }}'>RSS</a>, <a href='{{ json_url }}'>JSON</a></span>
 			</div>
 			<table id='items'>
 				{% for item in items -%}
 				<tr class='item'>
-					<td class='item_score'>{{ item.score }}</td>
+					<td class='item__score'>{{ item.score }}</td>
 					<td>
-						<a href='{{ item.main_url() }}' class='item_link'>{{ item.title }}</a>
+						<a href='{{ item.main_url() }}' class='item__link'>{{ item.title }}</a>
 						{% if item.domain is none -%}
-							<span class='item_domain'>— <a href='/?q=type:{{ item.subkind }}'>{{ item.subkind }}</a></span>
+							<span class='item__domain'>— <a href='/?q=type:{{ item.subkind }}'>{{ item.subkind }}</a></span>
 						{%- else -%}
-							<span class='item_domain'>— <a href='/?q=host:{{ item.domain }}'>{{ item.domain }}</a></span>
+							<span class='item__domain'>— <a href='/?q=host:{{ item.domain }}'>{{ item.domain }}</a></span>
 						{%- endif %}
 						
-						<div class='item_subline'>
+						<div class='item__subline'>
 							by <a href='/?q=author:{{ item.author }}'>{{ item.author }}</a>
 							{{ item.date_posted|timesince }} –
 							<a href='{{ item.comments_url() }}'>{{ item.num_comments }} comment{% if item.num_comments != 1 %}s{% endif %}</a>
@@ -39,11 +39,11 @@
 			</table>
 		{%- endif %}
 		
-	</main>
+	</section>
 	
 	{%- include 'footer.html' -%}
 	
-</div>
+</main>
 	
 {% endblock %}
 

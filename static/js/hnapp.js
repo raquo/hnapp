@@ -6,28 +6,28 @@ init();
 function init()
 {
 	// Auto-focus query field
-	elById('query').focus();
+	elById('header__searchbox__input').focus();
 	
 	// Enable toggle of syntax panel
-	document.getElementById('syntax_toggle').onclick = function()
+	document.getElementById('syntax__toggle').onclick = function()
 	{
-		if (elById('syntax').style.display == 'block')
+		if (elById('syntax__content').style.display == 'block')
 		{
-			elById('syntax').style.display = 'none';
+			elById('syntax__content').style.display = 'none';
 			window.location.hash = '';
 		}
 		else
 		{
-			elById('syntax').style.display = 'block';
+			elById('syntax__content').style.display = 'block';
 			window.location.hash = '#showsyntax';
 		}
 		return false;
 	}
 	
-	// Open syntax panel if requested
+	// Show syntax panel on page load
 	if (window.location.hash === '#showsyntax')
 	{
-		elById('syntax').style.display = 'block';
+		elById('syntax__content').style.display = 'block';
 	}
 }
 
