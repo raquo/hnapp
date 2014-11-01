@@ -23,12 +23,12 @@ from search import Search
 
 from urlparse import urljoin
 from datetime import datetime
-
+from math import log10
 
 
 
 @app.template_filter()
-def timesince(dt, default="just now"):
+def time_since(dt, default="just now"):
 	"""
 	Returns string representing "time since" e.g. 3 days ago, 5 hours ago, etc.
 	source: http://flask.pocoo.org/snippets/33/
@@ -53,6 +53,11 @@ def timesince(dt, default="just now"):
 
 	return default
 
+
+
+@app.template_filter()
+def num_digits(score, default=0):
+	return 1 + int(log10(score))
 
 
 def query_url(text_query, output_format=None):

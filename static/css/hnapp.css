@@ -138,10 +138,6 @@ header {
 			color: #b5e1ff;
 		}
 		
-		#header__submit__text--full {
-			display: inline;
-		}
-		
 		#header__submit__text--compact {
 			display: none;
 		}
@@ -163,7 +159,7 @@ header {
 		margin: -4px -6px -6px -6px;
 		padding: 6px;
 		font-size: 12px;
-		font-family: "Verdana";
+		font-family: "Verdana", sans-serif;
 		color: #107fc7;
 		/*color: white;*/
 		/*text-decoration: underline dashed;*/
@@ -212,43 +208,49 @@ header {
 footer {
 	text-align: center;
 	margin: 50px auto 30px auto;
-	padding: 10px 10px 8px 10px;
+	padding: 8px 10px 7px 10px;
 	font-size: 12px;
-	font-family: "Verdana", "sans-serif";
+	font-family: "Verdana", sans-serif;
+	line-height: 1.5;
 	background: #ff3e00;
 	color: white;
 }
-	
-	footer span + span {
-		margin-left: 20px;
-	}
 	
 	footer a,
 	footer a:visited {
 		color: white;
 	}
+	
+	.footer__text + .footer__text {
+		margin-left: 20px;
+	}
+	
+	
 
 
 
 
 /* SUBSCRIBE */
 
-#subscribe {
+.subscribe {
 	text-align: center;
 	margin-bottom: 10px;
 }
+	.subscribe--mobile {
+		display: none;
+	}
 	
-	#subscribe span {
+	.subscribe__text {
 		display: inline-block;
 		padding: 7px 7px 5px 7px;
 		background: #93ff9a;
 		color: #2d8733;
 	}
-	
-	#subscribe a {
-		font-weight: bold;
-		color: #2d8733;
-	}
+		
+		.subscribe__text a {
+			font-weight: bold;
+			color: #2d8733;
+		}
 
 
 
@@ -270,7 +272,6 @@ footer {
 			padding: 0 10px;
 			font-size: 30px;
 			color: #ff3e00;
-/*			background: #eee;*/
 		}
 		
 		.item__link {
@@ -296,43 +297,40 @@ footer {
 
 /* FRONT PAGE */
 
-#tagline {
+.tagline {
 	margin: 55px 0 30px 0;
 	text-align: center;
 	line-height: 1.6;
 	color: #444;
 }
+	
+	.tagline--compact {
+		display: none;
+	}
 		
 #features {
 	margin-left: 17%;
 }
-	.feature:first-child {
-		width: auto;
-		margin-right: 100px;
-	}
 	
 	.feature {
 		width: 50%;
-		/*width: 420px;*/
 		float: left;
-		/*margin: 0 20px;*/
-		/*background: #eee;*/
 	}
 		
-		.feature h3 {
-			font-size: 19pt;
+		.feature__title {
+			font-size: 25px;
 			margin-bottom: 10px;
 			color: #444;
 		}
 		
-		.feature ul {
+		.feature__list {
 			list-style-type: none;
 			padding-left: 15px;
 			margin: 0;
 			font-size: 120%;
 		}
 		
-		.feature li {
+		.feature__list__item {
 			margin: 7px 0;
 		}
 
@@ -363,6 +361,10 @@ footer {
 
 @media all and (max-width: 800px) {
 	
+	body {
+		font-size: 13px;
+	}
+	
 	
 	/* HEADER */
 	
@@ -372,7 +374,8 @@ footer {
 		#header__logo {
 			position: relative;
 			background: #ff3e00;
-			padding-bottom: 20px;
+			padding-top: 5px;
+			padding-bottom: 22px;
 			z-index: 1;
 		}
 			
@@ -393,7 +396,7 @@ footer {
 		
 		#header__submit {
 			margin: 0;
-			padding: 10px 6px 8px 6px;
+			padding: 10px 6px 9px 6px;
 			border-width: 4px;
 		}
 			
@@ -413,15 +416,118 @@ footer {
 		text-align: center;
 	}
 		
+		#syntax__toggle {
+			margin: 0px -2px -2px -2px;
+			padding: 2px;
+		}
+			
 		#syntax__content {
 			text-align: left;
 			padding: 0px 10px 20px 10px;
-			font-size: 85%;
 		}
 			
 			.syntax__list,
 			.syntax__list + .syntax__list {
 				margin: 10px 0 0 10px;
 			}
+	
+	
+	/* SUBSCRIBE */
+	
+	.subscribe--mobile {
+		display: block;
+		font-size: 12px;
+		margin-top: 5px;
+		font-family: "Verdana", sans-serif;
+	}
+		
+		.subscribe--non-mobile {
+			display: none;
+		}
+		
+		.subscribe__text {
+			padding: 3px 5px 5px 5px;	
+		}
+	
+	
+	/* ITEMS */
+	
+	#items {
+		margin-top: 10px;
+		border-spacing: 0 15px; /* order: — | */
+	}
+		
+		.item__score {
+			padding: 0 5px;
+			font-size: 18px;
+		}
+			
+			.item__score--2-digits {
+				font-size: 16px;
+			}
+			
+			.item__score--3-digits {
+				font-size: 14px;
+			}
+			
+			.item__score--4-digits {
+				font-size: 13px;
+			}
+	
+	
+	/* FRONT PAGE */
+	
+	.tagline--compact {
+		display: block;
+		margin: 30px 0 -2px 0;
+		font-size: 20px;
+	}
+	
+		.tagline--full {
+			display: none;
+		}
+			
+	#features {
+		margin-left: 0;
+		padding: 10px;
+	}
+		.feature {
+			white-space: nowrap;
+		}
+			
+			@media (max-width: 479px) {
+				.feature {
+					float: none;
+					margin-left: 20px;
+				}
+					
+					.feature__title {
+						margin: 20px 0 5px 0;
+					}
+			}
+			
+			.feature__title {
+				font-size: 19px;
+			}
+			
+	#feedback {
+		margin: 20px 0 -10px 0;
+		font-size: 19px;
+	}
+	
+	
+	/* FOOTER */
+	
+	footer {
+		display: block;
+		line-height: 2;
+		margin-bottom: 0;
+	}
+	
+	.footer__text,
+	.footer__text + .footer__text {
+		display: block;
+		margin: 0px;
+	}
 }
 

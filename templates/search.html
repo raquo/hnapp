@@ -4,20 +4,20 @@
 	
 <main>
 	
-	{%- include 'header.html' -%}
+	{%- include 'parts/header.html' -%}
 	
 	<section>
 		
 		{% if query is none -%}
-			{%- include 'front.html' -%}
+			{%- include 'parts/front.html' -%}
 		{%- else -%}
-			<div id='subscribe'>
-				<span>Subscribe to this search:&nbsp; <a href='{{ rss_url }}'>RSS</a>, <a href='{{ json_url }}'>JSON</a></span>
+			<div class='subscribe subscribe--non-mobile'>
+				<span class='subscribe__text'>Subscribe to this search:&nbsp; <a href='{{ rss_url }}'>RSS</a>, <a href='{{ json_url }}'>JSON</a></span>
 			</div>
 			<table id='items'>
 				{% for item in items -%}
 				<tr class='item'>
-					<td class='item__score'>{{ item.score }}</td>
+					<td class='item__score item__score--{{ item.score|num_digits }}-digits'>{{ item.score }}</td>
 					<td>
 						<a href='{{ item.main_url() }}' class='item__link'>{{ item.title }}</a>
 						{% if item.domain is none -%}
@@ -28,7 +28,7 @@
 						
 						<div class='item__subline'>
 							by <a href='/?q=author:{{ item.author }}'>{{ item.author }}</a>
-							{{ item.date_posted|timesince }} –
+							{{ item.date_posted|time_since }} –
 							<a href='{{ item.comments_url() }}'>{{ item.num_comments }} comment{% if item.num_comments != 1 %}s{% endif %}</a>
 						</div>
 					</td>
@@ -37,11 +37,14 @@
 				Nothing found :(
 				{%- endfor %}
 			</table>
+			<div class='subscribe subscribe--mobile'>
+				<span class='subscribe__text'>Subscribe to this search:&nbsp; <a href='{{ rss_url }}'>RSS</a>, <a href='{{ json_url }}'>JSON</a></span>
+			</div>
 		{%- endif %}
 		
 	</section>
 	
-	{%- include 'footer.html' -%}
+	{%- include 'parts/footer.html' -%}
 	
 </main>
 	
