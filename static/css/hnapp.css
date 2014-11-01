@@ -64,7 +64,8 @@ header {
 		display: inline-block;
 		float: left;
 		z-index: 1;
-		padding: 5px 5px 5px 9px;
+		padding: 5px 5px 0 9px;
+		height: 38px;
 		text-decoration: none;
 		background: #ff3e00;
 	}
@@ -409,7 +410,7 @@ footer {
 	}
 		#header__logo {
 			padding-right: 7px;
-			padding-bottom: 25px;
+			padding-bottom: 4px;
 		}
 			
 			#header__logo__symbol {
