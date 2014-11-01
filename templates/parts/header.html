@@ -17,31 +17,33 @@
 	
 	<div id='syntax'>
 		<a href='#' id='syntax__toggle' class='no-outline' tabindex='3'>Advanced search: filter by author, host, score, etc.</a>
-		<div id='syntax__content' class='clearfix'>
-			<ul class='syntax__list'>
-				<li class='syntax__list__title'><b>Syntax</b></li>
-				<li><a href='/?q=author:jacquesm'><b>author:</b>jacquesm</a></li>
-				<li><a href='/?q=host:github.com'><b>host:</b>github.com</a></li>
-				<li><a href='/?q=type:ask'><b>type:</b>ask</a> &nbsp;
-					<i>(also –
-						<a href='/?q=type:show'>show</a>,
-						<a href='/?q=type:link'>link</a>,
-						<a href='/?q=type:poll'>poll</a>,
-						<a href='/?q=type:job'>job</a>)
-					</i>
-				</li>
-				<li><a href='/?q=score%3E100'><b>score&gt;</b>100</a></li>
-				<li><a href='/?q=comments%3E50'><b>comments&gt;</b>50</a></li>
-				<li><a href='/?q=type%3Ashow+%7C+type%3Aask'>type:show <b>|</b> type:ask</a></li>
-				<li><a href='/?q=-host:pravda.ru'><b>-</b>host:pravda.ru</a></li>
-			</ul>
-			<ul class='syntax__list'>
-				<li class='syntax__list__title'><b>Examples</b></li>
-				<li><a href='/?q=meteor+type%3Ashow+%7C+host%3Agithub.com'>meteor &nbsp;type:show | host:github.com</a></li>
-				<li><a href='/?q=score%3E100+comments%3E10'>score&gt;100 comments&lt;10</a></li>
-				<li><a href='/?q=YC+-host:ycombinator.com'>YC -host:ycombinator.com</a></li>
-				<li><a href='/?q=hiring+%7C+type%3Ajob+%7C+author%3Awhoishiring'>hiring | type:job | author:whoishiring</a></li>
-			</ul>
+		<div id='syntax__content'>
+			<div class='syntax__slider syntax__slider--init clearfix'>
+				<ul class='syntax__list'>
+					<li class='syntax__list__title'><b>Syntax</b></li>
+					<li><a href='/?q=author:jacquesm'><b>author:</b>jacquesm</a></li>
+					<li><a href='/?q=host:github.com'><b>host:</b>github.com</a></li>
+					<li><a href='/?q=type:ask'><b>type:</b>ask</a> &nbsp;
+						<i>(also –
+							<a href='/?q=type:show'>show</a>,
+							<a href='/?q=type:link'>link</a>,
+							<a href='/?q=type:poll'>poll</a>,
+							<a href='/?q=type:job'>job</a>)
+						</i>
+					</li>
+					<li><a href='/?q=score%3E100'><b>score&gt;</b>100</a></li>
+					<li><a href='/?q=comments%3E50'><b>comments&gt;</b>50</a></li>
+					<li><a href='/?q=type%3Ashow+%7C+type%3Aask'>type:show <b>|</b> type:ask</a></li>
+					<li><a href='/?q=-host:pravda.ru'><b>-</b>host:pravda.ru</a></li>
+				</ul>
+				<ul class='syntax__list'>
+					<li class='syntax__list__title'><b>Examples</b></li>
+					<li><a href='/?q=meteor+type%3Ashow+%7C+host%3Agithub.com'>meteor &nbsp;type:show | host:github.com</a></li>
+					<li><a href='/?q=score%3E100+comments%3E10'>score&gt;100 comments&lt;10</a></li>
+					<li><a href='/?q=YC+-host:ycombinator.com'>YC -host:ycombinator.com</a></li>
+					<li><a href='/?q=hiring+%7C+type%3Ajob+%7C+author%3Awhoishiring'>hiring | type:job | author:whoishiring</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 	
