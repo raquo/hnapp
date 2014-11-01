@@ -184,7 +184,7 @@ header {
 	
 	.syntax__slider--hide {
 		margin-top: -200px;
-		transition: 0.2s;
+		/*transition: 0.2s;*/
 		opacity: 0;
 	}
 	
