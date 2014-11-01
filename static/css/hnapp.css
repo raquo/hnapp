@@ -467,7 +467,7 @@ footer {
 			.syntax__slider--hide {
 				margin-top: -300px;
 				/* opacity: 1; /* disable opacity animation on mobile */
-				transition: 0s; /* disable hide-animation on mobile to avoid flicker on load */
+				transition: none; /* disable hide-animation on mobile to avoid flicker on load */
 			}
 			
 			.syntax__list,
