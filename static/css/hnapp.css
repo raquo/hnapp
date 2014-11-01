@@ -533,7 +533,7 @@ footer {
 	
 	.tagline--compact {
 		display: block;
-		margin: 12px 0 -2px 0;
+		margin: 12px 0 4px 0;
 		font-size: 20px;
 	}
 	
@@ -542,9 +542,7 @@ footer {
 		}
 			
 	#features {
-		/*margin-left: 0;*/
 		box-sizing: border-box;
-		/*max-width: 70%;*/
 		min-width: 480px;
 		padding: 5px 10px;
 	}
