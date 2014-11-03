@@ -44,7 +44,7 @@ def fix_ask_items():
 	items = (db.session.query(Item)
 					   .with_entities(Item.id)
 					   .filter(Item.subkind == 'ask')
-					   .filter(Item.raw_body == None)
+					   # .filter(Item.raw_body == None)
 					   .order_by(sqlalchemy.desc(Item.id))
 					   .all()
 					   )
