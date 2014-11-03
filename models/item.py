@@ -271,15 +271,18 @@ class Item(sqlalchemy.ext.declarative.declarative_base()):
 		Data must be properly encoded for XML
 		"""
 		
-		title = (u'%d – %s' % (self.score, self.title)).encode('ascii', 'xmlcharrefreplace')
-		points_label = str(self.score) + (' point' if self.score % 10 == 1 else ' points')
-		comments_label = str(self.num_comments) + ' comment' + ('s' if self.num_comments != 1 else '')
 		comments_url = self.comments_url().encode('ascii', 'xmlcharrefreplace')
-		description = ('<p>%s, <a href="%s">%s</a></p>' % (points_label, comments_url, comments_label)) \
-					  .encode('ascii', 'xmlcharrefreplace')
-		return {'title': title,
+		if self.kind == 'story':
+			title = u'%d – %s' % (self.score, self.title)
+			points_label = str(self.score) + (' point' if self.score % 10 == 1 else ' points')
+			comments_label = str(self.num_comments) + ' comment' + ('s' if self.num_comments != 1 else '')
+			description = ('<p>%s, <a href="%s">%s</a></p>' % (points_label, comments_url, comments_label))
+		else: # comment
+			title = u'%s comments on "%s"' % (self.author, self.root.title if self.root else '(unknown story)')
+			description = u'%s <hr /><p><a href="%s">link</a>' % (self.body, self.comments_url())
+		return {'title': title.encode('ascii', 'xmlcharrefreplace'),
 				'title_type': 'html',
-				'content': description,
+				'content': description.encode('ascii', 'xmlcharrefreplace'),
 				'content_type': 'html',
 				'author': self.author,
 				'url': self.main_url(),

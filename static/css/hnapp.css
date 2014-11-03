@@ -44,6 +44,10 @@ input::-moz-focus-inner, button::-moz-focus-inner,
 	clear: both;
 }
 
+.nowrap {
+	white-space: nowrap;
+}
+
 main {
 	max-width: 960px;
 	margin: 0 auto;
@@ -285,18 +289,37 @@ footer {
 /* ITEMS */
 
 #items {
-	border-spacing: 0 20px; /* order: — | */
-	border-collapse: separate;
+	border-spacing: 0; /* 20px; /* order: — | */
+	/*border-collapse: separate;*/
 }
 	
 	.item {
 		/*list-style-type: none;*/
 		/*padding: 0px 0;*/
 	}
+		.item--story__main {
+			padding: 0.7em 0.5em 0.7em 0;
+		}
+		
+		.item--comment-top td {
+			padding-top: 0.7em;
+		}
+		
+		.item--comment__score-dummy {
+			min-width: 1.6em;
+		}
+		
+		.item__body {
+			margin-bottom: 1.4em;
+		}
+		
+		.item--story + .item--comment-top td {
+			padding-top: 2em;
+		}
 		
 		.item__score {
 			text-align: right;
-			padding: 0 10px;
+			padding-right: 10px;
 			font-size: 30px;
 			color: #ff3e00;
 		}
@@ -314,9 +337,45 @@ footer {
 				color: inherit;
 			}
 		
-		.item__subline {
+		.item--story__subline {
 			margin-top: 2px;
 			font-size: 90%;
+		}
+		
+		.item--comment-top {
+			font-size: 90%;
+			/*font-style: italic;*/
+		}
+		
+			
+			.item--comment-top__link,
+			.item--comment-top__parent-link {
+				margin-left: 0.5em;
+			}
+			
+			.item--comment-top__author {
+				color: #ff3e00;
+			}
+			
+			.item--comment-top__author:visited {
+				color: #ff9574;
+			}
+		
+		.item__body {
+			line-height: 1.5;
+		}
+		
+		.item__body p {
+			margin: 0.6em 0;
+		}
+		
+		/*	.item__body p:first-child {
+				margin-top: 0;
+			}
+		*/
+		.item__body a { /* In your face, long links! :D This will do for now. */
+			word-wrap: break-word;
+			word-break: break-all;
 		}
 
 
@@ -503,14 +562,14 @@ footer {
 	
 	#items {
 		/*margin-top: 10px;*/
-		border-spacing: 5px 15px; /* order: — | */
+		/*border-spacing: 5px 15px; /* order: — | */
 	}
 		.item__link {
 			font-size: 140%;
 		}
 		
 		.item__score {
-			padding: 0 5px 0 0;
+			padding: 0 5px 0 6px;
 			font-size: 18px;
 		}
 			
@@ -525,6 +584,19 @@ footer {
 			.item__score--4-digits {
 				font-size: 13px;
 			}
+		
+		.item--comment-top td {
+			padding: 0 0.6em;
+		}
+		
+		.item--comment .item--comment-top td {
+			background: red;
+		} 
+		
+		.item__body {
+			margin-right: 0.6em;
+			font-size: 110%;
+		}
 	
 	
 	/* FRONT PAGE */

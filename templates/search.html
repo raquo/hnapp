@@ -15,27 +15,16 @@
 				<span class='subscribe__text'>Subscribe to this search:&nbsp; <a href='{{ rss_url }}'>RSS</a>, <a href='{{ json_url }}'>JSON</a></span>
 			</div>
 			<table id='items'>
-				{% for item in items -%}
-				<tr class='item'>
-					<td class='item__score item__score--{{ item.score|num_digits }}-digits'>{{ item.score }}</td>
-					<td>
-						<a href='{{ item.main_url() }}' class='item__link'>{{ item.title }}</a>
-						{% if item.domain is none -%}
-							<span class='item__domain'>— <a href='/?q=type:{{ item.subkind }}'>{{ item.subkind }}</a></span>
-						{%- else -%}
-							<span class='item__domain'>— <a href='/?q=host:{{ item.domain }}'>{{ item.domain }}</a></span>
-						{%- endif %}
-						
-						<div class='item__subline'>
-							by <a href='{{ item.author_url() }}'>{{ item.author }}</a>
-							{{ item.date_posted|time_since }} –
-							<a href='{{ item.comments_url() }}'>{{ item.num_comments }} comment{% if item.num_comments != 1 %}s{% endif %}</a>
-						</div>
-					</td>
-				</tr>
-				{%- else -%}
-				Nothing found :(
-				{%- endfor %}
+				{% for item in items %}
+					{% if item.kind == 'story' %}
+						{% include 'parts/story.html' %}
+					{% else %}
+						{% include 'parts/comment.html' %}
+					{% endif %}
+				{% else %}
+					<p>Nothing found :( Check your spelling and syntax?</p>
+					<p>Note: older HN items haven't been indexed yet: <a href='/status'>Check status</a>.</p>
+				{% endfor %}
 			</table>
 			<div class='subscribe subscribe--mobile'>
 				<span class='subscribe__text'>Subscribe to this search:&nbsp; <a href='{{ rss_url }}'>RSS</a>, <a href='{{ json_url }}'>JSON</a></span>

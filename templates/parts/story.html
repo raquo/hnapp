@@ -1,0 +1,17 @@
+<tr class='item item--story'>
+	<td class='item__score item__score--{{ item.score|num_digits }}-digits'>{{ item.score }}</td>
+	<td class='item--story__main'>
+		<a href='{{ item.main_url() }}' class='item__link'>{{ item.title }}</a>
+		{% if item.domain is none -%}
+			<span class='item__domain'>— <a href='/?q=type:{{ item.subkind }}'>{{ item.subkind }}</a></span>
+		{%- else -%}
+			<span class='item__domain'>— <a href='/?q=host:{{ item.domain }}'>{{ item.domain }}</a></span>
+		{%- endif %}
+		
+		<div class='item--story__subline'>
+			by <a href='{{ item.author_url() }}'>{{ item.author }}</a>
+			<span class='nowrap'>{{ item.date_posted|time_since }}</span> –
+			<a href='{{ item.comments_url() }}'>{{ item.num_comments }} comment{% if item.num_comments != 1 %}s{% endif %}</a>
+		</div>
+	</td>
+</tr>

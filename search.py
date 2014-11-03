@@ -165,7 +165,7 @@ class Search(object):
 		token_tree = cls.token_tree(text_query.split())
 		
 		query = (db.session.query(Item)
-						   .filter(Item.kind == 'story')
+						   # .filter(Item.kind == 'story')
 						   .filter(Item.dead == 0)
 						   .filter(Item.deleted == 0)
 						   )
@@ -218,7 +218,9 @@ class SearchToken(object):
 		if self.prefix == 'word:':
 			tsquery = db.session.execute(sqlalchemy.sql.select([func.plainto_tsquery('english', self.value)])).fetchone()[0]
 			if tsquery != '':
-				where = Item.title_tsv.match(tsquery)
+				where_story = sqlalchemy.and_(Item.kind == 'story', Item.title_tsv.match(tsquery))
+				where_comment = sqlalchemy.and_(Item.kind == 'comment', Item.body_tsv.match(tsquery))
+				where = sqlalchemy.or_(where_story, where_comment)
 			else:
 				# print 'empty word: %s' % self.value
 				return None
@@ -244,8 +246,11 @@ class SearchToken(object):
 				return None
 		
 		elif self.prefix == 'type:':
-			if self.value.lower() in ('link', 'job', 'poll', 'ask', 'show'):
-				where = (Item.subkind == self.value.lower())
+			value = self.value.lower()
+			if value == 'story':
+				where = (Item.kind == value)
+			elif value in ('comment', 'link', 'job', 'poll', 'ask', 'show'):
+				where = (Item.subkind == value)
 			else:
 				return None
 		
