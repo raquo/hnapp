@@ -79,10 +79,9 @@ def route_search():
 	
 	# <<< Shall we split this into web / RSS / JSON routes?
 	
-	# Get query and format
+	# Get query
 	text_query = flask.request.args.get('q', None)
 	url_rule = flask.request.url_rule
-	output_format = flask.request.args.get('format', None)
 	
 	# Parse query if it is set
 	if text_query is not None:
@@ -94,9 +93,21 @@ def route_search():
 		items = None
 		title = u'hnapp – Search Hacker News, subscribe via RSS or JSON'
 	
+	# Get format
+	if flask.request.path == '/':
+		output_format = None
+	elif flask.request.path == '/rss' and query is not None:
+		output_format = 'rss'
+	elif flask.request.path == '/json'and query is not None:
+		output_format = 'json'
+	
+	# Those who created their filters on alpha version new.hnapp.com
+	# don't expect comments, so we fix it for them
+	if int(flask.request.args.get('legacy', 0)) == 1:
+		return flask.redirect(query_url('type:story '+text_query, output_format=output_format), code=302)
 	
 	# Web page
-	if flask.request.path == '/':
+	if output_format is None:
 		page_data = {
 			'title': title,
 			'query': text_query,
@@ -109,7 +120,7 @@ def route_search():
 	
 	
 	# RSS
-	elif flask.request.path == '/rss' and query is not None:
+	elif output_format == 'rss':
 		feed = AtomFeed(title=title.encode('ascii', 'xmlcharrefreplace'),
 						title_type='html',
 						feed_url=query_url(text_query, output_format='rss'),
@@ -123,7 +134,7 @@ def route_search():
 		
 	
 	# JSON
-	elif flask.request.path == '/json' and query is not None:
+	elif output_format == 'json':
 		
 		feed = {}
 		feed['query'] = text_query
