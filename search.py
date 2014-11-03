@@ -32,17 +32,17 @@ class Search(object):
 			if word.lower().startswith(prefix):
 				if params.get('type', None) == 'join':
 					if prefix == word and not negate: # negating joins is not valid
-						print '>>>>>J', prefix
+						# print '>>>>>J', prefix
 						token = SearchJoin(prefix=prefix)
 					else:
-						print '>>>>JW', prefix
+						# print '>>>>JW', prefix
 						token = SearchToken(prefix='word:', value=word, negate=negate)
 				else:
-					print '>>>>>>', prefix, negate
+					# print '>>>>>>', prefix, negate
 					token = SearchToken(prefix=prefix, value=word[len(prefix):], negate=negate)
 				break
 		else:
-			print '>>>>>W', prefix, negate
+			# print '>>>>>W', prefix, negate
 			token = SearchToken(prefix='word:', value=word, negate=negate)
 		return token # if token.validate() else None
 		
