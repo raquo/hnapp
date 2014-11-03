@@ -24,14 +24,11 @@ class Search(object):
 	
 	@classmethod
 	def token_from_word(cls, word):
-		"""..."""
+		"""Parse word into a SearchToken"""
+		
 		negate = (word[0] == '-')
 		word = word[1:] if negate else word
-		# print '-----'
-		# print negate
-		# print '<<>>', word
 		for prefix, params in SearchToken.types.iteritems():
-			# prefix = prefix.lower()
 			if word.lower().startswith(prefix):
 				if params.get('type', None) == 'join':
 					if prefix == word and not negate: # negating joins is not valid
@@ -53,7 +50,7 @@ class Search(object):
 	
 	@classmethod
 	def token_tree(cls, words):
-		"""..."""
+		"""Generate a token tree from a list of words"""
 		
 		# print "WORDS: ", words
 		
@@ -76,9 +73,10 @@ class Search(object):
 		
 		# Compile token tree
 		while(len(tokens) > 0):
+			
 			# Handle subsequent join operators
 			# Special case for sequences like a | b | c | d ...
-			# This will compile to |(a, b, c, d)
+			# This will compile to |(a, b, c, d) instead of a nested structure
 			if len(tokens) >= 2:
 				if isinstance(tokens[0], SearchJoin):
 					prev_token = token_tree[0]
@@ -91,6 +89,7 @@ class Search(object):
 					del tokens[0]
 					del tokens[0]
 					continue
+			
 			# Handle lone join operator
 			if len(tokens) >= 3:
 				if isinstance(tokens[1], SearchJoin):
@@ -100,9 +99,11 @@ class Search(object):
 					del tokens[0]
 					del tokens[0]
 					continue
+			
 			# Handle non-join token
 			token_tree.append(tokens[0])
 			del tokens[0]
+		
 		
 		# print 'TREE: ', token_tree
 		
@@ -119,9 +120,16 @@ class Search(object):
 	
 	@classmethod
 	def clean_join(cls, join, errors):
+		"""
+		Remove non-validating tokens, such as single stop-words
+		Un-nest (remove) joins that contain only one token as a result of this cleanup
+		"""
+		
 		# Remove non-validating tokens
 		# print "CLEAN:", join
 		for ix, token in reversed(list(enumerate(join.tokens))):
+			
+			# Recurse into nested joins
 			if isinstance(token, SearchJoin):
 				# print "JOIN<<<<"
 				clean_token = cls.clean_join(token, errors)
@@ -129,6 +137,8 @@ class Search(object):
 					del join.tokens[ix]
 				else:
 					join.tokens[ix] = clean_token
+			
+			# Check that the token validates
 			else:
 				try:
 					# <<< This could be more efficient, maybe – filter() call only for validation
@@ -139,6 +149,7 @@ class Search(object):
 					errors.append(e)
 					del join.tokens[ix]
 		
+		# Un-nest (remove) joins that only contain one token
 		if len(join.tokens) > 1:
 			return join
 		elif len(join.tokens) == 1:
@@ -150,6 +161,7 @@ class Search(object):
 	@classmethod
 	def query(cls, text_query):
 		"""..."""
+		
 		token_tree = cls.token_tree(text_query.split())
 		
 		query = (db.session.query(Item)
@@ -177,7 +189,6 @@ class SearchToken(object):
 		'author:': {},
 		'host:': {},
 		'type:': {},
-		# 'front:': {},
 		'score>': {},
 		'score<': {},
 		'comments>': {},
@@ -188,10 +199,14 @@ class SearchToken(object):
 	value = None
 	negate = False
 	
+	
+	
 	def __init__(self, prefix=None, value=None, negate=False):
 		self.prefix = prefix
 		self.value = value
 		self.negate = negate
+	
+	
 	
 	def filter(self):
 		"""
@@ -270,14 +285,20 @@ class SearchToken(object):
 		else:
 			raise AppError(u'Token prefix not found: %s' % self.prefix)
 		
+		
 		if self.negate:
 			return sqlalchemy.not_(where)
 		else:
 			return where
 		
 	
+	
 	def __repr__(self):
 		return u'<%s(%s%s %s)>' % (self.__class__.__name__, 'NOT ' if self.negate else '', self.prefix, self.value)
+
+
+
+
 
 
 
@@ -285,9 +306,13 @@ class SearchJoin(SearchToken):
 	
 	tokens = []
 	
+	
+	
 	def __init__(self, prefix=None, tokens=None):
 		self.prefix = prefix
 		self.tokens = tokens
+	
+	
 	
 	def filter(self):
 		"""
@@ -302,9 +327,13 @@ class SearchJoin(SearchToken):
 			'|': sqlalchemy.or_,
 			'&': sqlalchemy.and_
 			}
+		
 		for token in self.tokens:
 			filters.append(token.filter())
+		
 		return operators[self.prefix](*filters)
+	
+	
 	
 	def __repr__(self):
 		return u'<%s(%s, %s)>' % (self.__class__.__name__, self.prefix, self.tokens)

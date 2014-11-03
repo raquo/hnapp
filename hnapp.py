@@ -60,7 +60,9 @@ def num_digits(score, default=0):
 	return 1 + int(log10(score))
 
 
+
 def query_url(text_query, output_format=None):
+	
 	url = app.config['HOST_NAME']+'/'
 	if output_format is not None:
 		url += output_format
@@ -75,7 +77,7 @@ def query_url(text_query, output_format=None):
 @app.route('/', methods=['GET'])
 def route_search():
 	
-	# <<< Shall we split this into three routes?
+	# <<< Shall we split this into web / RSS / JSON routes?
 	
 	# Get query and format
 	text_query = flask.request.args.get('q', None)
@@ -92,17 +94,19 @@ def route_search():
 		items = None
 		title = u'hnapp – Search Hacker News, subscribe via RSS or JSON'
 	
+	
 	# Web page
 	if flask.request.path == '/':
 		page_data = {
 			'title': title,
 			'query': text_query,
 			'items': items,
-			'rss_url': query_url(text_query, output_format='rss'), # flask.request.url + '&format=rss', # <<< !!!
-			'json_url': query_url(text_query, output_format='json'), #flask.request.url + '&format=rss' # <<< !!!
+			'rss_url': query_url(text_query, output_format='rss'),
+			'json_url': query_url(text_query, output_format='json'),
 			'ga_id': app.config['GA_ID']
 			}
 		return flask.render_template('search.html', **page_data)
+	
 	
 	# RSS
 	elif flask.request.path == '/rss' and query is not None:
@@ -126,7 +130,8 @@ def route_search():
 		feed['items'] = [item.json_entry() for item in items]
 		return flask.jsonify(**feed)
 	
-	# output_format defined but query is not
+	
+	# output_format defined but query is not – booo!
 	else:
 		flask.abort(404)
 
@@ -134,6 +139,7 @@ def route_search():
 
 @app.route('/status', methods=['GET'])
 def route_status():
+	
 	statuses = db.session.query(Status).all()
 	max_item_id = db.engine.execute(sqlalchemy.sql.text('SELECT MAX(id) FROM item')).scalar()
 	min_item_id = db.engine.execute(sqlalchemy.sql.text('SELECT MIN(id) FROM item')).scalar()

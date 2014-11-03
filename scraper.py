@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# import flask
 import requests
 import json
 import traceback
