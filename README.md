@@ -34,33 +34,33 @@ hnapp was tested in the following environment:
 Installation
 ------------
 
-1. Install all dependencies. Install python stuff into a virtualenv.
-2. Create postgresql user and database
+- Install all dependencies. Install python stuff into a virtualenv.
+- Create postgresql user and database
 ```bash
 sudo su - postgres
 psql -U postgres -c "CREATE USER hnapp WITH PASSWORD 'new_password'"
 psql -U postgres postgres -f /srv/www/hnapp/sql/schema.sql
 psql
 ```
-3. Grant permissions to the new user (run this in psql)
+- Grant permissions to the new user (run this in psql)
 ```sql
 \c hnapp
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES in schema public TO hnapp
 INSERT INTO status (name, number) values ('last_item_id', XXXXXXX)
 ```
 Where XXXXXXX is the id of the first HN item you want hnapp to download. Don't set it too far in the past, you can always download more items later.
-4. Install dependencies from bower.json
-5. Install python dependencies using pip if you haven't done so yet:
+- Install dependencies from bower.json
+- Install python dependencies using pip if you haven't done so yet:
 ```bash
 pip install -r requirements.txt
 ```
-6. Create a config file and edit it as per instructions within
+- Create a config file and edit it as per instructions within
 ```bash
 cp config.sample.py config.py
 nano config.py
 ```
-7. Set up a cron job to run ```vpython /srv/www/hnapp/cron.py every_1_min``` every minute (replace ```vpython``` with the path to the python binary in your virtual environment). You should redirect all output to a log file to log errors.
-8. Connect hnapp to a web server. The directory ```static``` must be webroot. hnapp was tested with ```nginx``` and ```uwsgi```. The uwsgi application is ```app``` in ```run.py```. For development purposes, you can use Flask's built-in web server by running ```vpython run.py```
+- Set up a cron job to run ```vpython /srv/www/hnapp/cron.py every_1_min``` every minute (replace ```vpython``` with the path to the python binary in your virtual environment). You should redirect all output to a log file to log errors.
+- Connect hnapp to a web server. The directory ```static``` must be webroot. hnapp was tested with ```nginx``` and ```uwsgi```. The uwsgi application is ```app``` in ```run.py```. For development purposes, you can use Flask's built-in web server by running ```vpython run.py```
 
 
 License
