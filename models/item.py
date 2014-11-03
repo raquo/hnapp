@@ -93,7 +93,6 @@ class Item(sqlalchemy.ext.declarative.declarative_base()):
 				# Update root's number of comments
 				if not item.deleted:
 					root.num_comments += 1
-					# print "Added comments to %d: now %d" % (root.id, root.num_comments)
 		else: # item.kind == 'story'				
 			# Find and count story's existing comments
 			num_comments = 0
@@ -154,18 +153,12 @@ class Item(sqlalchemy.ext.declarative.declarative_base()):
 		# See if this item already exists
 		item = db.session.query(Item).get(data['id'])
 		
-		# print "Data: "
-		# print data
-		
 		# If found, update this item
 		if item is not None:
 			item.update(data)
 		# Otherwise, create a new item
 		else:
 			item = Item.create(data)
-		
-		# print "Item:"
-		# print item
 		
 		# Manually set date_update – this runs even if no new data was available
 		item.date_updated = datetime.utcnow()

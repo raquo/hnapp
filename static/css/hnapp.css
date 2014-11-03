@@ -128,21 +128,18 @@ header {
 		display: block;
 		box-sizing: border-box;
 		float: right;
-		padding: 2px 8px 0 8px;
-		/*margin: 5px 0 0 8px;*/
+		padding: 2px 12px 0 12px;
 		height: 43px;
 		font-size: 17px;
 		font-weight: bold;
 		background: #86cfff;
 		border: 0;
-		/*border: 3px solid #39a3e9;*/
 		color: #107fc7;
 	}
 		
 		#header__submit:focus,
 		#header__submit:hover {
 			background: #b5e1ff;
-			/*border-bottom: 4px solid #2992d5;*/
 		}
 		
 		/* <<< TODO: This should be JS-ed so that it highlights on Enter-typed form submit */
@@ -434,6 +431,7 @@ footer {
 		#header__submit {
 			height: 47px;
 			width: 47px;
+			padding: 2px 0 0 0;
 		}
 			
 			#header__submit__text--full {
