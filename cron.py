@@ -14,7 +14,11 @@ def test():
 	from scraper import Scraper
 	s = Scraper()
 	s.connect()
-	s.save_item(s.fetch_item(8281522));
+	
+	# item_data = s.fetch_item(8549539)
+	# print item_data
+	# print '<<<'
+	# item = s.save_item(item_data)
 	
 	# from search import Search
 	
@@ -29,6 +33,30 @@ def test():
 
 
 @manager.command
+def fix_ask_items
+	"""Temporary command to fix type:ask items appearing as links with no URL"""
+	
+	s = Scraper()
+	s.connect()
+	
+	itmes = (db.session.query(Item)
+					   .with_entities(Item.id)
+					   .filter(Item.subkind == 'ask')
+					   .filter(Item.raw_body == None)
+					   .order_by(sqlalchemy.desc(Item.id))
+					   .slice(start_from, count+start_from)
+					   .all()
+					   )
+	
+	# Fetch and save items
+	def save(item_data):
+		s.save_item(item_data)
+		print 'fixed '+item_data.id
+	item_ids = [item.id for item in items]
+	s.fetch_items(item_ids, callback=save)
+
+
+@manager.command
 def init():
 	s = Scraper()
 	s.connect()
@@ -38,7 +66,8 @@ def init():
 @manager.command
 def update(from_id, to_id, backsort):
 	"""
-	Update items between given ids. Use this to fetch older data.
+	Update items between given ids
+	Use this command to fetch older data
 	"""
 	
 	if from_id is None or not from_id.isdigit() or to_id is None or not to_id.isdigit() or backsort not in ('0', '1'):

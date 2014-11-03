@@ -69,7 +69,7 @@ class Scraper(object):
 		"""
 		
 		# Generate list of newest stories
-		# %%% Actually, we only need ids
+		# <<< TODO: Actually, we only need ids
 		stories = (db.session.query(Item)
 							 .with_entities(Item.id)
 							 .filter(Item.kind == 'story')
@@ -78,12 +78,6 @@ class Scraper(object):
 							 .slice(start_from, count+start_from)
 							 .all()
 							 )
-		
-		# Fetch and save each item
-		# get_old_item_ids(stories, min_delay)
-		# def save_item(item):
-		# 	if (datetime.utcnow() - item['date_updated']).total_seconds() > min_delay:
-		# 		self.save_item(item_data)
 		
 		save = lambda item_data: self.save_item(item_data)
 		self.fetch_items([item.id for item in stories], callback=save, min_delay=min_delay)
@@ -132,6 +126,8 @@ class Scraper(object):
 			Status.set_max_item_id(item_data.id if isinstance(item_data, LostItem) else item_data['id'])
 		
 		db.session.commit()
+		
+		return item
 		
 	
 	
@@ -185,13 +181,14 @@ class Scraper(object):
 			item_data['body'] = self.bleach_html(raw_item['text'])
 		
 		# Set (or unset) URL and domain
-		if 'url' in item_data and item_data['url'] is not None:
-			if len(item_data['url']) == 0:
+		if raw_item.get('url', None) is not None:
+			if len(raw_item['url']) == 0:
 				item_data['url'] = None
 				item_data['domain'] = None
 			else:
-				parsed_url = urlparse(item_data['url'])
+				parsed_url = urlparse(raw_item['url'])
 				item_data['domain'] = parsed_url.hostname.lower()
+				item_data['url'] = raw_item['url'] # <<< should we use urlunparse here? https://docs.python.org/2/library/urlparse.html#urlparse.urlunparse
 				if item_data['domain'][:4] == 'www.':
 					item_data['domain'] = item_data['domain'][4:]
 		
@@ -316,6 +313,11 @@ class Scraper(object):
 		debug_print(">> fetch_top_story_ids")
 		
 		return self.firebase.get('topstories', None)
+	
+	
+	
+	
+	
 	
 	
 

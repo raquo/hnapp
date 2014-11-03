@@ -134,7 +134,8 @@ class Item(sqlalchemy.ext.declarative.declarative_base()):
 				root = self.find_root()
 				if root is not None:
 					self.root_id = root.id
-			# If item was deleted just now, and it already had a root
+			# If w're deleting an item, and it already had a root
+			# Decrement root's number of comments
 			if self.deleted and item_had_root and not item_was_deleted:
 				self.root.num_comments -= 1
 		
