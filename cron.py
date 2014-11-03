@@ -1,8 +1,10 @@
 
 import flask.ext.script
+import sqlalchemy
 from datetime import datetime
 
-from hnapp import app
+from hnapp import app, db
+from models.item import Item
 from scraper import Scraper
 
 
@@ -33,25 +35,24 @@ def test():
 
 
 @manager.command
-def fix_ask_items
+def fix_ask_items():
 	"""Temporary command to fix type:ask items appearing as links with no URL"""
 	
 	s = Scraper()
 	s.connect()
 	
-	itmes = (db.session.query(Item)
+	items = (db.session.query(Item)
 					   .with_entities(Item.id)
 					   .filter(Item.subkind == 'ask')
 					   .filter(Item.raw_body == None)
 					   .order_by(sqlalchemy.desc(Item.id))
-					   .slice(start_from, count+start_from)
 					   .all()
 					   )
 	
 	# Fetch and save items
 	def save(item_data):
 		s.save_item(item_data)
-		print 'fixed '+item_data.id
+		print 'fixed '+str(item_data['id'])
 	item_ids = [item.id for item in items]
 	s.fetch_items(item_ids, callback=save)
 
