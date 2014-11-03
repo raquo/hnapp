@@ -207,8 +207,10 @@ class Scraper(object):
 		}
 		item_data['kind'], item_data['subkind'] = item_types[raw_item.get('type', None)]
 		# Special treatment for ask/show stories
-		if item_data['kind'] == 'story' and not item_data.get('deleted', False):
-			if item_data.get('domain', None) is None:
+		if item_data['subkind'] == 'link' and not item_data.get('deleted', False):
+			if 'text' in raw_item and item_data.get('domain', None) is None:
+				# Semi-killed items like 8549613 can have no URL, but also don't have a text field
+				# Non-broken items on the other hand do have the text field, empty of unapplicable
 				item_data['subkind'] = 'ask'
 			if item_data['title'].lower()[0:8] == 'show hn:':
 				item_data['subkind'] = 'show'
