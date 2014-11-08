@@ -179,13 +179,13 @@ class Scraper(object):
 		if 'text' in raw_item:
 			item_data['body'] = self.bleach_html(raw_item['text'])
 		
-		# Set (or unset) URL and domain
+		# Set URL and domain
+		# Some of the possible "broken" URLs: None, "", " "
+		item_data['url'] = None
+		item_data['domain'] = None
 		if raw_item.get('url', None) is not None:
-			if len(raw_item['url']) == 0:
-				item_data['url'] = None
-				item_data['domain'] = None
-			else:
-				parsed_url = urlparse(raw_item['url'])
+			parsed_url = urlparse(raw_item['url'])
+			if parsed_url.hostname is not None:
 				item_data['domain'] = parsed_url.hostname.lower()
 				item_data['url'] = raw_item['url'] # <<< should we use urlunparse here? https://docs.python.org/2/library/urlparse.html#urlparse.urlunparse
 				if item_data['domain'][:4] == 'www.':
