@@ -103,8 +103,12 @@ def route_search():
 	
 	# Those who created their filters on alpha version new.hnapp.com
 	# don't expect comments, so we fix it for them
-	if int(flask.request.args.get('legacy', 0)) == 1:
-		return flask.redirect(query_url('type:story '+text_query, output_format=output_format), code=302)
+	if flask.request.args.get('legacy', 0) == '1':
+		# Not a search – redirect to home page
+		if text_query is None:
+			return flask.redirect(query_url(None, output_format=None), code=302)
+		else:
+			return flask.redirect(query_url('type:story '+text_query, output_format=output_format), code=302)
 	
 	# Web page
 	if output_format is None:
