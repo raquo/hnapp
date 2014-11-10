@@ -109,9 +109,11 @@ class Scraper(object):
 		Each item is committed separately for better fault tolerance
 		"""
 		
+		item = None
 		# If item was lost
 		if isinstance(item_data, LostItem):
-			db.session.add(item_data)
+			item = item_data
+			db.session.add(item)
 			debug_print("Lost %s because %s" % (item_data.id, item_data.reason), '\n')
 		else:
 			if item_data.get('type', None) in ('story', 'comment', 'poll', 'job', None):
