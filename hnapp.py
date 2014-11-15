@@ -129,7 +129,8 @@ def route_search():
 			'items': items,
 			'rss_url': query_url(text_query, output_format='rss') if query is not None else None,
 			'json_url': query_url(text_query, output_format='json') if query is not None else None,
-			'ga_id': app.config['GA_ID']
+			'ga_id': app.config['GA_ID'],
+			'HOST_NAME': app.config['HOST_NAME']
 			}
 		return flask.render_template('search.html', **page_data)
 	
@@ -179,7 +180,8 @@ def route_status():
 		'min_item_id': min_item_id,
 		'item_count': item_count,
 		'lost_item_ids': ', '.join([str(item[0]) for item in lost_item_ids]),
-		'ga_id': app.config['GA_ID']
+		'ga_id': app.config['GA_ID'],
+		'HOST_NAME': app.config['HOST_NAME']
 		}
 	return flask.render_template('status.html', **page_data)
 

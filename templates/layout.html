@@ -32,12 +32,13 @@
 	<meta property="og:title" content="{{ meta_og_title }}" />
 	<meta property="og:description" content="{{ meta_description }}" />
 	<meta property="og:site_name" content="hnapp" />
-	<meta property="og:image" content="http://hnapp.com/img/icons/hnapp-icon-120x120.png" />
+	<meta property="og:image" content="{{ HOST_NAME }}/img/icons/hnapp-icon-120x120.png" />
 	
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content="{{ title }}" />
 	<meta name="twitter:description" content="{{ meta_description }}" />
 	<meta name="twitter:site" content="@hnapp" />
+	<meta property="twitter:image" content="{{ HOST_NAME }}/img/icons/hnapp-icon-120x120.png" />
 	
 	{% if rss_url -%}
 		<link rel='alternate' type='application/rss+xml' title='{{ title }}' href='{{ rss_url }}' />
