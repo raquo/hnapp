@@ -1,4 +1,7 @@
 
+var isTouchDevice = 'ontouchstart' in document.documentElement;
+
+
 init();
 
 
@@ -6,27 +9,36 @@ init();
 function init()
 {
 	// Auto-focus query field
-	elById('header__searchbox__input').focus();
-	slider = document.getElementsByClassName('syntax__slider')[0];
+	if (!isTouchDevice)
+	{
+		elById('header__searchbox__input').focus();
+	}
+	
+	syntaxSlider = document.getElementsByClassName('syntax__slider')[0];
 	
 	
 	// Enable toggle of syntax panel
 	document.getElementById('syntax__toggle').onclick = function(ev)
 	{
-		removeClass(slider, 'syntax__slider--init');
+		removeClass(syntaxSlider, 'syntax__slider--init');
 		
-		if (hasClass(slider, 'syntax__slider--show'))
+		// Give the browser time to process removal of init class
+		// So that animation runs reliably
+		setTimeout(function()
 		{
-			addClass(slider, 'syntax__slider--hide');
-			removeClass(slider, 'syntax__slider--show');
-			window.location.hash = '';
-		}
-		else
-		{
-			addClass(slider, 'syntax__slider--show');
-			removeClass(slider, 'syntax__slider--hide');
-			window.location.hash = '#showsyntax';
-		}
+			if (hasClass(syntaxSlider, 'syntax__slider--show'))
+			{
+				addClass(syntaxSlider, 'syntax__slider--hide');
+				removeClass(syntaxSlider, 'syntax__slider--show');
+				window.location.hash = '';
+			}
+			else
+			{
+				addClass(syntaxSlider, 'syntax__slider--show');
+				removeClass(syntaxSlider, 'syntax__slider--hide');
+				window.location.hash = '#showsyntax';
+			}
+		}, 0);
 		
 		return false;
 	}
@@ -34,12 +46,12 @@ function init()
 	// Show syntax panel on page load
 	if (window.location.hash === '#showsyntax')
 	{
-		addClass(slider, 'syntax__slider--show');
-		removeClass(slider, 'syntax__slider--init');
+		addClass(syntaxSlider, 'syntax__slider--show');
+		removeClass(syntaxSlider, 'syntax__slider--init');
 	}
 	else
 	{
-		addClass(slider, 'syntax__slider--hide');
+		addClass(syntaxSlider, 'syntax__slider--hide');
 	}
 	
 }
@@ -88,9 +100,6 @@ function removeClass(el, className)
 		el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
 	}
 }
-
-
-
 
 
 

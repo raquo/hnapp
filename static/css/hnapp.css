@@ -389,10 +389,6 @@ footer {
 	line-height: 1.6;
 	color: #444;
 }
-	
-	.tagline--compact {
-		display: none;
-	}
 
 #features {
 	display: table;
@@ -601,15 +597,11 @@ footer {
 	
 	/* FRONT PAGE */
 	
-	.tagline--compact {
+	.tagline {
 		display: block;
 		margin: 12px 0 4px 0;
 		font-size: 20px;
 	}
-	
-		.tagline--full {
-			display: none;
-		}
 			
 	#features {
 		box-sizing: border-box;

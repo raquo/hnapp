@@ -83,15 +83,23 @@ def route_search():
 	text_query = flask.request.args.get('q', None)
 	url_rule = flask.request.url_rule
 	
-	# Parse query if it is set
+	# Search page 
 	if text_query is not None:
 		query = Search.query(text_query)
 		items = query.all()
-		title = u'%s – hnapp' % (text_query if len(text_query) > 0 else 'all')
+		query_title = (text_query if len(text_query) > 0 else 'HN Firehose')
+		meta_og_title = u'hnapp search: "%s"' % query_title
+		title = u'%s – hnapp' % query_title
+		
+	# Front page
 	else:
 		query = None
 		items = None
 		title = u'hnapp – Search Hacker News, subscribe via RSS or JSON'
+		meta_og_title = u'hnapp – Hacker News Search & RSS'
+	
+	meta_keywords = u'Hacker News,RSS,hnapp'
+	meta_description = u'Search Hacker News stories & comments by keywords, user, score, etc. Read online or subscribe by RSS or JSON'
 	
 	# Get format
 	if flask.request.path == '/':
@@ -114,10 +122,13 @@ def route_search():
 	if output_format is None:
 		page_data = {
 			'title': title,
+			'meta_og_title': meta_og_title,
+			'meta_keywords': meta_keywords,
+			'meta_description': meta_description,
 			'query': text_query,
 			'items': items,
-			'rss_url': query_url(text_query, output_format='rss'),
-			'json_url': query_url(text_query, output_format='json'),
+			'rss_url': query_url(text_query, output_format='rss') if query is not None else None,
+			'json_url': query_url(text_query, output_format='json') if query is not None else None,
 			'ga_id': app.config['GA_ID']
 			}
 		return flask.render_template('search.html', **page_data)
@@ -162,6 +173,7 @@ def route_status():
 	lost_item_ids = db.session.query(LostItem.id).all() # db.engine.execute(sqlalchemy.sql.text('SELECT id FROM lost_item ORDER BY id DESC')).scalar()
 	page_data = {
 		'title': u'hnapp – Status',
+		'meta_og_title': u'hnapp – Status',
 		'statuses': statuses,
 		'max_item_id': max_item_id,
 		'min_item_id': min_item_id,

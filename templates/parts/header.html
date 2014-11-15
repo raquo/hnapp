@@ -11,7 +11,15 @@
 		</button>
 		
 		<div id='header__searchbox'>
-			<input id='header__searchbox__input' name='q' type='text' value='{{ query if query is not none else '' }}' tabindex='1' placeholder='Enter search query, e.g.   twitter | facebook score>10 host:techcrunch.com' />
+			<input  id='header__searchbox__input'
+					name='q'
+					type='text'
+					value='{{ query if query is not none else '' }}'
+					tabindex='1'
+					autocorrect='off'
+					autocapitalize='off'
+					placeholder='Enter search query, e.g.   twitter | facebook score>10 host:techcrunch.com'
+					/>
 		</div>
 	</form>
 	
