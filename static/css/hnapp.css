@@ -195,11 +195,6 @@ header {
 		opacity: 1;
 	}
 	
-	.syntax__slider--init {
-		display: none;
-		transition-duration: 0s;
-	}
-	
 	.syntax__list {
 		list-style-type: none;
 		padding: 0;
@@ -341,7 +336,15 @@ footer {
 			margin-top: 2px;
 			font-size: 90%;
 		}
-		
+			
+			.item--story__author-link {
+				margin-right: 0.5em;
+			}
+			
+			.item--story__comments-link {
+				margin-left: 0.5em;
+			}
+			
 		.item--comment-top {
 			font-size: 90%;
 			/*font-style: italic;*/
@@ -354,6 +357,7 @@ footer {
 			}
 			
 			.item--comment-top__author {
+				font-weight: bold;
 				color: #ff3e00;
 			}
 			

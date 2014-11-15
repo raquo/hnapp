@@ -9,9 +9,13 @@
 		{%- endif %}
 		
 		<div class='item--story__subline'>
-			by <a href='{{ item.author_url() }}'>{{ item.author }}</a>
-			<span class='nowrap'>{{ item.date_posted|time_since }}</span> –
-			<a href='{{ item.comments_url() }}'>{{ item.num_comments }} comment{% if item.num_comments != 1 %}s{% endif %}</a>
+			<a class='item--story__author-link'
+			   href='{{ item.author_url() }}'>{{ item.author }}</a>
+			<span class='nowrap'>{{ item.date_posted|time_since }}</span>
+			<a class='item--story__comments-link'
+			   href='{{ item.comments_url() }}'
+			   >{{ item.num_comments }} comment{% if item.num_comments != 1 %}s{% endif %}
+			</a>
 		</div>
 	</td>
 </tr>

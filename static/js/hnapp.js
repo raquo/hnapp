@@ -20,40 +20,19 @@ function init()
 	// Enable toggle of syntax panel
 	document.getElementById('syntax__toggle').onclick = function(ev)
 	{
-		removeClass(syntaxSlider, 'syntax__slider--init');
-		
-		// Give the browser time to process removal of init class
-		// So that animation runs reliably
-		setTimeout(function()
+		if (hasClass(syntaxSlider, 'syntax__slider--show'))
 		{
-			if (hasClass(syntaxSlider, 'syntax__slider--show'))
-			{
-				addClass(syntaxSlider, 'syntax__slider--hide');
-				removeClass(syntaxSlider, 'syntax__slider--show');
-				window.location.hash = '';
-			}
-			else
-			{
-				addClass(syntaxSlider, 'syntax__slider--show');
-				removeClass(syntaxSlider, 'syntax__slider--hide');
-				window.location.hash = '#showsyntax';
-			}
-		}, 0);
+			addClass(syntaxSlider, 'syntax__slider--hide');
+			removeClass(syntaxSlider, 'syntax__slider--show');
+		}
+		else
+		{
+			addClass(syntaxSlider, 'syntax__slider--show');
+			removeClass(syntaxSlider, 'syntax__slider--hide');
+		}
 		
 		return false;
 	}
-	
-	// Show syntax panel on page load
-	if (window.location.hash === '#showsyntax')
-	{
-		addClass(syntaxSlider, 'syntax__slider--show');
-		removeClass(syntaxSlider, 'syntax__slider--init');
-	}
-	else
-	{
-		addClass(syntaxSlider, 'syntax__slider--hide');
-	}
-	
 }
 
 
