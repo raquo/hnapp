@@ -1,7 +1,7 @@
 hnapp
 =====
 
-hnapp is a search engine for Hacker News that lets you subscribe to new search results via RSS or JSON. So, you would use it to keep in the loop about your favourite technologies, keep an eye on mentions of your product, filter out politics, or follow what smart people say. See [hnapp.com](http://hnapp.com) for more examples.
+hnapp is a search engine for Hacker News that lets you subscribe to new search results via RSS or JSON. You would use it to keep in the loop about your favourite technologies, keep an eye on mentions of your product, filter out politics, or follow what your friends are talking about. See [hnapp.com](http://hnapp.com) for more examples.
 
 This repository contains the source code for all of hnapp, including the website [hnapp.com](http://hnapp.com).
 

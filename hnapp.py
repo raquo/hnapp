@@ -66,13 +66,13 @@ def route_search():
 	else:
 		query = None
 		items = None
-		title = u'hnapp – Search Hacker News, subscribe via RSS or JSON'
-		meta_og_title = u'hnapp – Hacker News Search & RSS'
+		title = u'hnapp – Hacker News RSS & JSON Feeds'
+		meta_og_title = u'hnapp – Hacker News RSS'
 	
 	
 	# Meta SEO tags
 	meta_keywords = u'Hacker News,RSS,hnapp'
-	meta_description = u'Search Hacker News stories & comments by keywords, user, score, etc. Read online or subscribe by RSS or JSON'
+	meta_description = u'Follow users, keywords, jobs, mentions of your product, etc. Filter by score, domain, anything.'
 	
 	
 	# Get format

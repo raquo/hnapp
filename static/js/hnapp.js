@@ -179,7 +179,7 @@ function setState(ev, query, pageNum, bustCache, fromHistory)
 	// Update page title
 	if (query === null)
 	{
-		document.title = 'hnapp – Search Hacker News, subscribe via RSS or JSON';
+		document.title = 'hnapp – Hacker News RSS & JSON Feeds';
 	}
 	else
 	{
