@@ -11,6 +11,10 @@ import urllib
 DEBUG = True
 
 
+# Disable Flask's swallowing of unhandled exceptions
+PROPAGATE_EXCEPTIONS = True
+
+
 # URL where the app is hosted e.g. http://hnapp.com (without trailing slash)
 HOST_NAME = ''
 
