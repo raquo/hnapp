@@ -51,7 +51,8 @@ Installation
 ```bash
 sudo su - postgres
 psql -U postgres -c "CREATE USER hnapp WITH PASSWORD 'new_password'"
-psql -U postgres postgres -f /srv/www/hnapp/sql/schema.sql
+psql -U postgres postgres -f /srv/www/hnapp/sql/initial_schema.sql
+psql -U postgres postgres -f /srv/www/hnapp/sql/migration_001.sql
 psql
 ```
 - Grant permissions to the new user (run this in psql)
