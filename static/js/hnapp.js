@@ -226,6 +226,13 @@ function setState(ev, query, pageNum, bustCache, fromHistory)
 	}
 	
 	
+	// Hide keyboard on mobile device
+	if (isTouchDevice)
+	{
+		elById('header__searchbox__input').blur();
+	}
+	
+	
 	// Update state
 	state.query = query;
 	state.pageNum = pageNum;
