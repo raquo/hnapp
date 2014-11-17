@@ -1,49 +1,47 @@
-
-
-<div id='front'>
-	
-	<h1 class='tagline'>
-		Search Hacker News by keywords, user, score, etc.<br />
-		Read online or subscribe by RSS or JSON
-	</h1>
-	
-	<div id='features' class='clearfix'>
 		
 		
-		<div class='feature__column'>
-			<div class='feature'>
-				<h3 class='feature__title'>Follow Important Stuff</h3>
-				<ul class='feature__list'>
-					<li class='feature__list__item'>– <a href='/?q=angular+%7C+angularjs+%7C+host%3Aangularjs.org'>Mentions of your product</a></li>
-					<li class='feature__list__item'>– <a href='/?q=author%3Apatio11+|+host%3Akalzumeus.com'>Patio11 fan club</a></li>
-					<li class='feature__list__item'>– <a href='/?q=type%3Ashow+score%3E10'>Popular Show-HNs</a></li>
-					<li class='feature__list__item'>– <a href='/?q=type%3Ajob+%7C+author%3Awhoishiring'>Jobseeker's digest</a></li>
-					<li class='feature__list__item'>– <a href='/?q=type%3Astory+YC+%7C+YCombinator+%7C+host%3Aycombinator.com'>YC and their startups</a></li>
-					<li class='feature__list__item'>– <a href='/?q=host%3Agithub.com+%7C+host%3Abitbucket.org+%7C+host%3Acode.google.com'>Open source code</a></li>
-				</ul>
+		<h1 class='tagline'>
+			Search Hacker News by keywords, user, score, etc.<br />
+			Read online or subscribe by RSS or JSON
+		</h1>
+		
+		<div id='features' class='clearfix'>
+			
+			
+			<div class='feature__column'>
+				<div class='feature'>
+					<h3 class='feature__title'>Follow Important Stuff</h3>
+					<ul class='feature__list'>
+						<li class='feature__list__item'>– <a onclick='setState(event, "angular | angularjs | host:angularjs.org")' href='/?q=angular+%7C+angularjs+%7C+host%3Aangularjs.org'>Mentions of your product</a></li>
+						<li class='feature__list__item'>– <a onclick='setState(event, "author:patio11 | host:kalzumeus.com");' href='/?q=author%3Apatio11+|+host%3Akalzumeus.com'>Patio11 fan club</a></li>
+						<li class='feature__list__item'>– <a onclick='setState(event, "type:show score>10");' href='/?q=type%3Ashow+score%3E10'>Popular Show-HNs</a></li>
+						<li class='feature__list__item'>– <a onclick='setState(event, "type:job | author:whoishiring");' href='/?q=type%3Ajob+%7C+author%3Awhoishiring'>Jobseeker's digest</a></li>
+						<li class='feature__list__item'>– <a onclick='setState(event, "type:story YC | YCombinator | host:ycombinator.com");' href='/?q=type%3Astory+YC+%7C+YCombinator+%7C+host%3Aycombinator.com'>YC and their startups</a></li>
+						<li class='feature__list__item'>– <a onclick='setState(event, "host:github.com | host:bitbucket.org | host:code.google.com");' href='/?q=host%3Agithub.com+%7C+host%3Abitbucket.org+%7C+host%3Acode.google.com'>Open source code</a></li>
+					</ul>
+				</div>
 			</div>
+			
+			<div class='feature__column'>
+				<div class='feature'>
+					<h3 class='feature__title'>Filter Certain Topics...</h3>
+					<ul class='feature__list'>
+						<li class='feature__list__item'>– <a onclick='setState(event, "score>50 -apple -iphone -ipad -imac -ipod -macbook -mac");' href='/?q=score%3E50+-apple+-iphone+-ipad+-imac+-ipod+-macbook+-mac'>iDontCare</a></li>
+						<li class='feature__list__item'>– <a onclick='setState(event, "score>50 -NSA -surveillance -spying -freedom -EFF -ACLU -Assange -Wikileaks -Snowden");' href='/?q=score%3E50+-NSA+-surveillance+-spying+-freedom+-EFF+-ACLU+-Assange+-Wikileaks+-Snowden'>Move along, citizen</a></li>
+					</ul>
+				</div>
+				<div class='feature'>
+					<h3 class='feature__title'>...Or Don't</h3>
+					<ul class='feature__list'>
+						<li class='feature__list__item'>– <a onclick='setState(event, "");' href='/?q='>One of everything, please</a></li>
+						<li class='feature__list__item'>– <a onclick='setState(event, "type:ask");' href='/?q=type%3Aask'>All of /ask</a></li>
+					</ul>
+				</div>
+			</div>
+			
 		</div>
 		
-		<div class='feature__column'>
-			<div class='feature'>
-				<h3 class='feature__title'>Filter Certain Topics...</h3>
-				<ul class='feature__list'>
-					<li class='feature__list__item'>– <a href='/?q=score%3E50+-apple+-iphone+-ipad+-imac+-ipod+-macbook+-mac'>iDontCare</a></li>
-					<li class='feature__list__item'>– <a href='/?q=score%3E50+-NSA+-surveillance+-spying+-freedom+-EFF+-ACLU+-Assange+-Wikileaks+-Snowden'>Move along, citizen</a></li>
-				</ul>
-			</div>
-			<div class='feature'>
-				<h3 class='feature__title'>...Or Don't</h3>
-				<ul class='feature__list'>
-					<li class='feature__list__item'>– <a href='/?q='>One of everything, please</a></li>
-					<li class='feature__list__item'>– <a href='/?q=type%3Aask'>All of /ask</a></li>
-				</ul>
-			</div>
-		</div>
+		<h2 id='feedback'>Questions, comments, feedback – <a href='mailto:nikita&#64;raquo.com'>nikita&#64;raquo.com</a></h2>
 		
-	</div>
-	
-	<h2 id='feedback'>Questions, comments, feedback – <a href='mailto:nikita&#64;raquo.com'>nikita&#64;raquo.com</a></h2>
-	
-</div>
-
+		
+		

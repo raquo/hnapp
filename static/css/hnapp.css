@@ -165,7 +165,7 @@ header {
 	font-family: "Verdana", sans-serif;
 	font-size: 90%;
 	line-height: 1.5;
-	margin: 0px 0 0 142px;
+	text-align: center;
 }
 	
 	#syntax__toggle {
@@ -175,13 +175,14 @@ header {
 		font-size: 12px;
 		font-family: "Verdana", sans-serif;
 		color: #107fc7;
-		/*color: white;*/
-		/*text-decoration: underline dashed;*/
 	}
 	
 	#syntax__content {
+		display: table;
 		position: relative;
 		overflow: hidden;
+		margin: 0 auto;
+		text-align: left;
 	}
 	
 	.syntax__slider--hide {
@@ -260,7 +261,7 @@ footer {
 
 .subscribe {
 	text-align: center;
-	margin-bottom: 10px;
+	margin-bottom: 25px;
 }
 	.subscribe--mobile {
 		display: none;
@@ -284,13 +285,16 @@ footer {
 /* ITEMS */
 
 #items {
-	border-spacing: 0; /* 20px; /* order: — | */
-	/*border-collapse: separate;*/
+	width: 100%;
+	border-spacing: 0;
 }
+	.items__no-results {
+		text-align: center;
+		line-height: 1.5;
+	}
 	
 	.item {
-		/*list-style-type: none;*/
-		/*padding: 0px 0;*/
+		/* ... */
 	}
 		.item--story__main {
 			padding: 0.7em 0.5em 0.7em 0;
@@ -347,7 +351,6 @@ footer {
 			
 		.item--comment-top {
 			font-size: 90%;
-			/*font-style: italic;*/
 		}
 		
 			
@@ -373,13 +376,94 @@ footer {
 			margin: 0.6em 0;
 		}
 		
-		/*	.item__body p:first-child {
-				margin-top: 0;
-			}
-		*/
-		.item__body a { /* In your face, long links! :D This will do for now. */
+		.item__body a { /* In your face, extremelylonglinks! This will do for now. */
 			word-wrap: break-word;
 			word-break: break-all;
+		}
+		
+		.item__body pre { /* Make <pre> text wrap if it's too long */
+			white-space: pre-wrap;
+		}
+
+
+
+
+/* LOADING */
+
+#items-loading {
+	/* Big margins reduce above-the-fold flicker (footer is not sticky) */
+	margin: 10em 0 50em 0;
+	margin: 25vh 0 55vh 0;
+	color: #ccc;
+	text-align: center;
+	-webkit-animation: blink 1s linear infinite;
+	-moz-animation: blink 1s linear infinite;
+	-ms-animation: blink 1s linear infinite;
+	-o-animation: blink 1s linear infinite;
+	animation: blink 1s linear infinite;
+}
+	
+	@keyframes blink {
+		0% { color: #fff; }
+		50% { color: #ccc; }
+		100% { color: #fff; }
+	}
+	
+	@-webkit-keyframes blink {
+		0% { color: #fff; }
+		50% { color: #ccc; }
+		100% { color: #fff; }
+	}
+	
+	#items-loading h2 {
+		letter-spacing: 0.2em;
+	}
+
+
+
+/* PAGINATION, ERRORS */
+
+#pagination,
+#items-error {
+	margin-top: 0.5em;
+	text-align: center;
+}
+	
+	#page-link {
+		position: relative;
+			top: 0.2em;
+		font-size: 2.5em;
+		margin: 0 0.2em;
+		text-decoration: none;
+	}
+		
+		#page-link:visited {
+			color: #2189eb;
+		}
+	
+	#prev-link,
+	#next-link {
+		padding: 0.3em;
+		text-decoration: none;
+	}
+		
+		#prev-link[disabled],
+		#next-link[disabled] {
+			pointer-events: none;
+			cursor: default;
+			color: #ccc;
+		}
+		
+			#prev-link[disabled] span,
+			#next-link[disabled] span {
+				text-decoration: none;
+			}
+			
+		#prev-link span,
+		#next-link span {
+			position: relative;
+				top: -0.05em;
+			text-decoration: underline;
 		}
 
 
@@ -438,7 +522,7 @@ footer {
 
 
 
-/* STATUSES */
+/* STATUS PAGE */
 
 #statuses {
 	border-spacing: 20px 15px; /* order: — | */
@@ -463,6 +547,7 @@ footer {
 	main {
 		padding: 0;
 	}
+	
 	
 	/* HEADER */
 	
@@ -505,8 +590,7 @@ footer {
 	/* SYNTAX */
 	
 	#syntax {
-		margin: 0;
-		text-align: center;
+		/*margin: 0;*/
 	}
 		
 		#syntax__toggle {
@@ -515,10 +599,6 @@ footer {
 		}
 			
 		#syntax__content {
-			/*display: table;*/
-			display: table;
-			margin: 0 auto;
-			text-align: left;
 			padding: 0px 10px 20px 10px;
 		}
 			@media (max-width: 500px) {
@@ -532,6 +612,17 @@ footer {
 				opacity: 1; /* disable opacity animation on mobile */
 				/*transition: none; /* disable hide-animation on mobile to avoid flicker on load */
 			}
+				
+				/* <<< TODO Firefox hack – for some reason negative top margin screws up layout */
+				@-moz-document url-prefix() {
+					#syntax {
+						margin-bottom: 30px;
+					}
+					
+					.syntax__slider--hide {
+						display: none;
+					}
+				}
 			
 			.syntax__list,
 			.syntax__list + .syntax__list {
@@ -545,7 +636,7 @@ footer {
 	.subscribe--mobile {
 		display: block;
 		font-size: 12px;
-		margin-top: 5px;
+		margin-top: 2.5em;
 		font-family: "Verdana", sans-serif;
 	}
 		
@@ -556,6 +647,13 @@ footer {
 		.subscribe__text {
 			padding: 3px 5px 5px 5px;	
 		}
+	
+	
+	/* PAGINATION */
+	
+	#pagination {
+		margin-top: 0.25em;
+	}
 	
 	
 	/* ITEMS */
@@ -660,6 +758,7 @@ footer {
 	footer {
 		display: block;
 		line-height: 2;
+		margin-top: 2.8em;
 		margin-bottom: 0;
 		padding-bottom: 9px;
 	}

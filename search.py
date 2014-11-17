@@ -131,7 +131,6 @@ class Search(object):
 			
 			# Recurse into nested joins
 			if isinstance(token, SearchJoin):
-				# print "JOIN<<<<"
 				clean_token = cls.clean_join(token, errors)
 				if clean_token is None:
 					del join.tokens[ix]
@@ -141,9 +140,7 @@ class Search(object):
 			# Check that the token validates
 			else:
 				try:
-					# <<< This could be more efficient, maybe – filter() call only for validation
 					if token.filter() is None:
-						# print "--- Token removed: %s" % token
 						del join.tokens[ix]
 				except QueryError as e:
 					errors.append(e)
@@ -159,7 +156,7 @@ class Search(object):
 	
 	
 	@classmethod
-	def query(cls, text_query):
+	def query(cls, text_query, page_num=1, offset=0, count=30):
 		"""..."""
 		
 		token_tree = cls.token_tree(text_query.split())
@@ -172,7 +169,7 @@ class Search(object):
 		if token_tree is not None:
 			query = query.filter(token_tree.filter())
 		
-		query = query.order_by(sqlalchemy.desc(Item.id)).slice(0, 30)
+		query = query.order_by(sqlalchemy.desc(Item.id)).slice(offset, offset+count)
 		
 		return query
 	
@@ -254,7 +251,7 @@ class SearchToken(object):
 			else:
 				return None
 		
-		# <<< Not sure if this should exist.
+		# <<< TODO Not sure if this operator should exist.
 		# elif self.prefix == 'front:':
 		# 	if self.value == 'yes':
 		# 		where = (Item.date_entered_fp != None) # SQLAlchemy == operator (not "is")

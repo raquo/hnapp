@@ -24,11 +24,23 @@ Dependencies
 - Also see ```requirements.txt``` for pip
 
 
+Web Browser Support
+-------------------
+
+- Enabling Javascript provides a faster GUI, but is not required
+- Mobile version tested in Chrome and Safari on iOS 6+ and Chrome on Android 4
+- Desktop version tested in Chrome, Firefox, Safari
+- IE 9-11 should work fine, but was not tested
+- IE <= 8 has some compatibility issues. Those browsers are out of the scope for this project
+
+
 Environment
 -----------
+
 hnapp was tested in the following environment:
 - Ubuntu 12.04 and 14.04
 - ```nginx``` + ```uwsgi``` combo for production, or Flask's built-in web server for development
+- All server timezones set to UTC
 
 
 Installation
@@ -65,11 +77,13 @@ nano config.py
 
 License
 --------------------------------
+
 MIT License, see LICENSE.md
 
 
 Contact
 -------
+
 For bug reports and feature requests, please open an issue on github.
 
 Nikita Gazarov

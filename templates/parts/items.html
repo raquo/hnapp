@@ -1,0 +1,30 @@
+		
+		
+		{% if query is not none %}
+		
+			<tbody id='items__page-{{ page_num }}' data-page-expires-at='{{ page_expires_at }}' data-has-more-items='{{ has_more_items }}'>
+			
+				{% for item in items %}
+					{% if item.kind == 'story' %}
+						{% include 'parts/item-story.html' %}
+					{% else %}
+						{% include 'parts/item-comment.html' %}
+					{% endif %}
+				{% else %}
+					<tr>
+						<td class='items__no-results'>
+							<h2>Nothing found :(</h2>
+							<p>
+								Check your spelling and syntax?<br />
+								Note: older HN items haven't been indexed yet.<br />
+								<a href='/status'>Check status</a>
+							</p>
+						</td>
+					</tr>
+				{% endfor %}
+			
+			</tbody>
+			
+		{% endif %}
+		
+		

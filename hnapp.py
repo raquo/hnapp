@@ -3,90 +3,61 @@
 import flask
 import flask.ext.sqlalchemy
 import sqlalchemy
-
+import time
 from werkzeug.contrib.atom import AtomFeed
-import urllib
 
+# Initialize application and database session
 app = flask.Flask(__name__,
 	template_folder='templates',
 	static_folder='static',
 	static_url_path=''
 	)
 app.config.from_pyfile('config.py')
-
 db = flask.ext.sqlalchemy.SQLAlchemy(app)
 
+# Import hnapp components. These require app & db to be set
+# <<< TODO is there a better way? Doesn't feel right...
 from models.item import Item
 from models.lost_item import LostItem
 from models.status import Status
 from search import Search
-
-from urlparse import urljoin
-from datetime import datetime
-from math import log10
+from utils import time_since, num_digits, query_url
 
 
-
-@app.template_filter()
-def time_since(dt, default="just now"):
-	"""
-	Returns string representing "time since" e.g. 3 days ago, 5 hours ago, etc.
-	source: http://flask.pocoo.org/snippets/33/
-	"""
-	
-	now = datetime.utcnow()
-	diff = now - dt
-	
-	periods = (
-		(diff.days / 365, "year", "years"),
-		(diff.days / 30, "month", "months"),
-		(diff.days / 7, "week", "weeks"),
-		(diff.days, "day", "days"),
-		(diff.seconds / 3600, "hour", "hours"),
-		(diff.seconds / 60, "minute", "minutes"),
-		(diff.seconds, "second", "seconds"),
-	)
-
-	for period, singular, plural in periods:
-		if period:
-			return "%d %s ago" % (period, singular if period == 1 else plural)
-
-	return default
-
-
-
-@app.template_filter()
-def num_digits(score, default=0):
-	return 1 + int(log10(score))
-
-
-
-def query_url(text_query, output_format=None):
-	
-	url = app.config['HOST_NAME']+'/'
-	if output_format is not None:
-		url += output_format
-	if text_query is not None:
-		url += '?q=' + urllib.quote(text_query.encode('utf8'))
-	return url
 
 
 
 @app.route('/rss', methods=['GET'])
 @app.route('/json', methods=['GET'])
+@app.route('/bare', methods=['GET'])
 @app.route('/', methods=['GET'])
 def route_search():
 	
-	# <<< Shall we split this into web / RSS / JSON routes?
-	
 	# Get query
 	text_query = flask.request.args.get('q', None)
-	url_rule = flask.request.url_rule
+	page_num = flask.request.args.get('page', 1);
+	show_syntax = flask.request.args.get('show_syntax', 0)
+	has_more_items = False
+	expires = 0
+	
+	# Fail if bad parameters provided
+	try:
+		page_num = int(page_num)
+		show_syntax = bool(int(show_syntax))
+	except ValueError:
+		flask.abort(400)
 	
 	# Search page 
 	if text_query is not None:
-		query = Search.query(text_query)
+		query = Search.query(text_query,
+							 page_num,
+							 offset=(page_num-1)*app.config['ITEMS_PER_PAGE'],
+							 count=app.config['ITEMS_PER_PAGE']+1
+							 )
 		items = query.all()
+		if len(items) == app.config['ITEMS_PER_PAGE']+1:
+			items = items[:-1]
+			has_more_items = True
 		query_title = (text_query if len(text_query) > 0 else 'HN Firehose')
 		meta_og_title = u'hnapp search: "%s"' % query_title
 		title = u'%s – hnapp' % query_title
@@ -98,18 +69,25 @@ def route_search():
 		title = u'hnapp – Search Hacker News, subscribe via RSS or JSON'
 		meta_og_title = u'hnapp – Hacker News Search & RSS'
 	
+	
+	# Meta SEO tags
 	meta_keywords = u'Hacker News,RSS,hnapp'
 	meta_description = u'Search Hacker News stories & comments by keywords, user, score, etc. Read online or subscribe by RSS or JSON'
+	
 	
 	# Get format
 	if flask.request.path == '/':
 		output_format = None
-	elif flask.request.path == '/rss' and query is not None:
-		output_format = 'rss'
-	elif flask.request.path == '/json'and query is not None:
-		output_format = 'json'
+		html_template = 'search.html'
+	else:
+		if text_query is None:
+			flask.abort(400)
+		output_format = flask.request.path[1:]
+		if output_format == 'bare':
+			html_template = 'parts/items.html'
 	
-	# Those who created their filters on alpha version new.hnapp.com
+	
+	# Those users who created their filters on alpha version new.hnapp.com
 	# don't expect comments, so we fix it for them
 	if flask.request.args.get('legacy', 0) == '1':
 		# Not a search – redirect to home page
@@ -118,21 +96,30 @@ def route_search():
 		else:
 			return flask.redirect(query_url('type:story '+text_query, output_format=output_format), code=302)
 	
-	# Web page
-	if output_format is None:
+	
+	# Web page or bare HTML
+	if output_format in (None, 'bare'):
 		page_data = {
+			'is_app': True,
 			'title': title,
 			'meta_og_title': meta_og_title,
 			'meta_keywords': meta_keywords,
 			'meta_description': meta_description,
+			'show_syntax': show_syntax,
 			'query': text_query,
 			'items': items,
+			'has_more_items': int(has_more_items),
+			'page_expires_at': int(time.time()) + 60*5, # Cache pages for this many seconds
+			'this_url': flask.request.url,
+			'prev_url': query_url(text_query, page_num=page_num-1) if query is not None else None,
+			'next_url': query_url(text_query, page_num=page_num+1) if query is not None else None,
 			'rss_url': query_url(text_query, output_format='rss') if query is not None else None,
 			'json_url': query_url(text_query, output_format='json') if query is not None else None,
+			'page_num': page_num,
 			'ga_id': app.config['GA_ID'],
 			'HOST_NAME': app.config['HOST_NAME']
 			}
-		return flask.render_template('search.html', **page_data)
+		return flask.render_template(html_template, **page_data)
 	
 	
 	# RSS
@@ -153,14 +140,16 @@ def route_search():
 	elif output_format == 'json':
 		
 		feed = {}
+		feed['has_more_items'] = has_more_items
 		feed['query'] = text_query
 		feed['items'] = [item.json_entry() for item in items]
 		return flask.jsonify(**feed)
 	
 	
-	# output_format defined but query is not – booo!
+	# output_format defined but query is not
+	# not supposed to happen, we checked for this above
 	else:
-		flask.abort(404)
+		flask.abort(500)
 
 
 
@@ -173,6 +162,7 @@ def route_status():
 	item_count  = db.engine.execute(sqlalchemy.sql.text('SELECT COUNT(*) FROM item')).scalar()
 	lost_item_ids = db.session.query(LostItem.id).all() # db.engine.execute(sqlalchemy.sql.text('SELECT id FROM lost_item ORDER BY id DESC')).scalar()
 	page_data = {
+		'is_app': False,
 		'title': u'hnapp – Status',
 		'meta_og_title': u'hnapp – Status',
 		'statuses': statuses,
@@ -187,21 +177,43 @@ def route_status():
 
 
 
+@app.errorhandler(400)
+def error(e):
+	return flask.render_template('error.html',
+								 is_app=False,
+								 error=u'400 – Bad Request',
+								 ga_id=app.config['GA_ID']
+								 ), 400
+
+
+
 @app.errorhandler(404)
 def error(e):
-	return flask.render_template('error.html', error=u'404 – Page Not Found', ga_id=app.config['GA_ID']), 404
+	return flask.render_template('error.html',
+								 is_app=False,
+								 error=u'404 – Page Not Found',
+								 ga_id=app.config['GA_ID']
+								 ), 404
 
 
 
 @app.errorhandler(403)
 def error(e):
-	return flask.render_template('error.html', error=u'403 – Access Denied', ga_id=app.config['GA_ID']), 403
+	return flask.render_template('error.html',
+								 is_app=False,
+								 error=u'403 – Access Denied',
+								 ga_id=app.config['GA_ID']
+								 ), 403
 
 
 
 @app.errorhandler(500)
 def error(e):
-	return flask.render_template('error.html', error=u'500 – Internal Server Error', ga_id=app.config['GA_ID']), 500
+	return flask.render_template('error.html',
+								 is_app=False,
+								 error=u'500 – Internal Server Error',
+								 ga_id=app.config['GA_ID']
+								 ), 500
 
 
 

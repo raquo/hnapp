@@ -68,7 +68,6 @@ class Scraper(object):
 		"""
 		
 		# Generate list of newest stories
-		# <<< TODO: Actually, we only need ids
 		stories = (db.session.query(Item)
 							 .with_entities(Item.id)
 							 .filter(Item.kind == 'story')
@@ -189,7 +188,7 @@ class Scraper(object):
 			parsed_url = urlparse(raw_item['url'])
 			if parsed_url.hostname is not None:
 				item_data['domain'] = parsed_url.hostname.lower()
-				item_data['url'] = raw_item['url'] # <<< should we use urlunparse here? https://docs.python.org/2/library/urlparse.html#urlparse.urlunparse
+				item_data['url'] = raw_item['url'] # <<< TODO should we use urlunparse here? https://docs.python.org/2/library/urlparse.html#urlparse.urlunparse
 				if item_data['domain'][:4] == 'www.':
 					item_data['domain'] = item_data['domain'][4:]
 		
@@ -204,7 +203,7 @@ class Scraper(object):
 			'story': ['story', 'link'],
 			'poll': ['story', 'poll'],
 			'job': ['story', 'job'],
-			None: ['story', 'link'] # <<< broken item... maybe these fields should be nullable in DB
+			None: ['story', 'link'] # <<< TODO broken item... maybe these fields should be nullable in DB
 		}
 		item_data['kind'], item_data['subkind'] = item_types[raw_item.get('type', None)]
 		# Special treatment for ask/show stories

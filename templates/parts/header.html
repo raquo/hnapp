@@ -1,11 +1,11 @@
 
 <header>
-	<form class='clearfix' method='get' action='/'>
-		<a href='/' id='header__logo'>
+	<form class='clearfix' method='get' action='/' autocomplete='off'>
+		<a href='/' id='header__logo' onclick='setState(event, null);'>
 			<span id='header__logo__symbol'></span>
 			<span id='header__logo__text'>hnapp</span>
 		</a>
-		<button id='header__submit' type='submit' tabindex='2'>
+		<button id='header__submit' type='submit' tabindex='2' onclick='setState(event, elById("header__searchbox__input").value, 1, true);'>
 			<span id='header__submit__text--full'>Search</span>
 			<span id='header__submit__text--compact'>Go</span>
 		</button>
@@ -24,34 +24,34 @@
 	</form>
 	
 	<div id='syntax'>
-		<a href='status' id='syntax__toggle' class='no-outline' tabindex='3'>Advanced search: filter by author, host, score, etc.</a>
+		<a href='{% if show_syntax %}/{% else %}/?show_syntax=1{% endif %}' id='syntax__toggle' class='no-outline' tabindex='3'>Advanced search: filter by author, host, score, etc.</a>
 		<div id='syntax__content'>
-			<div class='syntax__slider syntax__slider--hide clearfix'>
+			<div class='syntax__slider {% if show_syntax %} syntax__slider--show {% else %} syntax__slider--hide {% endif %} clearfix'>
 				<ul class='syntax__list'>
 					<li class='syntax__list__title'><b>Syntax</b></li>
-					<li><a href='/?q=author%3Ajacquesm'><b>author:</b>jacquesm</a></li>
-					<li><a href='/?q=host%3Agithub.com'><b>host:</b>github.com</a></li>
-					<li><a href='/?q=type%3Astory'><b>type:</b>story</a> &nbsp;
+					<li><a onclick='setState(event, this.innerText);' href='/?q=author%3Ajacquesm'><b>author:</b>jacquesm</a></li>
+					<li><a onclick='setState(event, this.innerText);' href='/?q=host%3Agithub.com'><b>host:</b>github.com</a></li>
+					<li><a onclick='setState(event, this.innerText);' href='/?q=type%3Astory'><b>type:</b>story</a> &nbsp;
 						<i>
-							<a href='/?q=type%3Acomment'>comment</a>,
-							<a href='/?q=type%3Aask'>ask</a>,
-							<a href='/?q=type%3Ashow'>show</a>,
-							<a href='/?q=type%3Alink'>link</a>,
-							<a href='/?q=type%3Ajob'>job</a>,
-							<a href='/?q=type%3Apoll'>poll</a>
+							<a onclick='setState(event, "type:"+this.innerText);' href='/?q=type%3Acomment'>comment</a>,
+							<a onclick='setState(event, "type:"+this.innerText);' href='/?q=type%3Aask'>ask</a>,
+							<a onclick='setState(event, "type:"+this.innerText);' href='/?q=type%3Ashow'>show</a>,
+							<a onclick='setState(event, "type:"+this.innerText);' href='/?q=type%3Alink'>link</a>,
+							<a onclick='setState(event, "type:"+this.innerText);' href='/?q=type%3Ajob'>job</a>,
+							<a onclick='setState(event, "type:"+this.innerText);' href='/?q=type%3Apoll'>poll</a>
 						</i>
 					</li>
-					<li><a href='/?q=score%3E100'><b>score&gt;</b>100</a></li>
-					<li><a href='/?q=comments%3E50'><b>comments&gt;</b>50</a></li>
-					<li><a href='/?q=type%3Ashow+%7C+type%3Aask'>type:show <b>|</b> type:ask</a></li>
-					<li><a href='/?q=-host%3Apravda.ru'><b>-</b>host:pravda.ru</a></li>
+					<li><a onclick='setState(event, this.innerText);' href='/?q=score%3E100'><b>score&gt;</b>100</a></li>
+					<li><a onclick='setState(event, this.innerText);' href='/?q=comments%3E50'><b>comments&gt;</b>50</a></li>
+					<li><a onclick='setState(event, this.innerText);' href='/?q=type%3Ashow+%7C+type%3Aask'>type:show <b>|</b> type:ask</a></li>
+					<li><a onclick='setState(event, this.innerText);' href='/?q=-host%3Apravda.ru'><b>-</b>host:pravda.ru</a></li>
 				</ul>
 				<ul class='syntax__list'>
 					<li class='syntax__list__title'><b>Examples</b></li>
-					<li><a href='/?q=meteor+type%3Ashow+%7C+host%3Agithub.com'>meteor &nbsp;type:show | host:github.com</a></li>
-					<li><a href='/?q=score%3E100+comments%3E10'>score&gt;100 comments&lt;10</a></li>
-					<li><a href='/?q=YC+-host:ycombinator.com'>YC -host:ycombinator.com</a></li>
-					<li><a href='/?q=hiring+%7C+type%3Ajob+%7C+author%3Awhoishiring'>hiring | type:job | author:whoishiring</a></li>
+					<li><a onclick='setState(event, this.innerText);' href='/?q=meteor+type%3Ashow+%7C+host%3Agithub.com'>meteor type:show | host:github.com</a></li>
+					<li><a onclick='setState(event, this.innerText);' href='/?q=score%3E100+comments%3E10'>score&gt;100 comments&lt;10</a></li>
+					<li><a onclick='setState(event, this.innerText);' href='/?q=YC+-host:ycombinator.com'>YC -host:ycombinator.com</a></li>
+					<li><a onclick='setState(event, this.innerText);' href='/?q=hiring+%7C+type%3Ajob+%7C+author%3Awhoishiring'>hiring | type:job | author:whoishiring</a></li>
 				</ul>
 			</div>
 		</div>

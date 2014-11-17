@@ -4,39 +4,71 @@
 	
 <main>
 	
-	{%- include 'parts/header.html' -%}
+	{% include 'parts/header.html' %}
 	
-	<section>
+	<section id='section-front' {% if query is not none %} style='display:none' {% endif %}>
+		{%- include 'parts/front.html' -%}
+	</section>
+	
+	<section id='section-items' {% if query is none %} style='display:none' {% endif %}>
 		
-		{% if query is none -%}
-			{%- include 'parts/front.html' -%}
-		{%- else -%}
-			<div class='subscribe subscribe--non-mobile'>
-				<span class='subscribe__text'>Subscribe to this search:&nbsp; <a href='{{ rss_url }}'>RSS</a>, <a href='{{ json_url }}'>JSON</a></span>
-			</div>
-			<table id='items'>
-				{% for item in items %}
-					{% if item.kind == 'story' %}
-						{% include 'parts/story.html' %}
-					{% else %}
-						{% include 'parts/comment.html' %}
-					{% endif %}
-				{% else %}
-					<p>Nothing found :( Check your spelling and syntax?</p>
-					<p>Note: older HN items haven't been indexed yet: <a href='/status'>Check status</a>.</p>
-				{% endfor %}
-			</table>
-			<div class='subscribe subscribe--mobile'>
-				<span class='subscribe__text'>Subscribe to this search:&nbsp; <a href='{{ rss_url }}'>RSS</a>, <a href='{{ json_url }}'>JSON</a></span>
-			</div>
-		{%- endif %}
+		<div class='subscribe subscribe--non-mobile'>
+			<span class='subscribe__text'>
+				Subscribe to this search:&nbsp;
+				<a class='subscribe__rss-link'  href='{{ rss_url }}' >RSS</a>,
+				<a class='subscribe__json-link' href='{{ json_url }}'>JSON</a>
+			</span>
+		</div>
+		
+		<table id='items'>
+			{%- include 'parts/items.html' -%}
+		</table>
+		
+		<div id='items-loading' style='display:none'>
+			<h2>Loading</h2>
+		</div>
+		
+		<div id='items-error' style='display:none'>
+			<h2>Server Error</h2>
+		</div>
+		
+		<div id='pagination'>
+			<a id='prev-link'
+			   {% if page_num == 1 %} class='disabled' disabled='disabled' {% endif %}
+			   href='{{ prev_url }}'
+			   onclick='setState(event, state.query, state.pageNum - 1);'
+			   >
+			   &larr;&nbsp;<span>prev</span>
+			</a>
+			<a id='page-link'
+			   href='{{ this_url }}'
+			   onclick='setState(event, state.query, state.pageNum, true);'
+			   >
+			   {{ page_num }}
+			</a>
+			<a id='next-link'
+				{% if has_more_items == 0 %} class='disabled' disabled='disabled' {% endif %}
+			   href='{{ next_url }}'
+			   onclick='setState(event, state.query, state.pageNum + 1 );'
+			   >
+			   <span>next</span>&nbsp;&rarr;
+			</a>
+		</div>
+		
+		<div class='subscribe subscribe--mobile'>
+			<span class='subscribe__text'>
+				Subscribe to this search:&nbsp;
+				<a class='subscribe__rss-link'  href='{{ rss_url }}' >RSS</a>,
+				<a class='subscribe__json-link' href='{{ json_url }}'>JSON</a>
+			</span>
+		</div>
 		
 	</section>
 	
-	{%- include 'parts/footer.html' -%}
+	{% include 'parts/footer.html' %}
 	
 </main>
-	
+
 {% endblock %}
 
 

@@ -82,7 +82,7 @@ class Item(sqlalchemy.ext.declarative.declarative_base()):
 		item = Item(**data)
 		db.session.add(item)
 		# Flush session to get item's relationships to work (%%% Why is this needed?)
-		# <<< I've enabled autoflush. I don't really need this anymore, right?
+		# <<< TODO I've enabled autoflush (I did? where?). I don't need this anymore, right?
 		db.session.flush()
 		
 		if item.kind == 'comment':

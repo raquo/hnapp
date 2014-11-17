@@ -1,0 +1,26 @@
+				
+				<tr class='item item--comment-top'>
+					<td colspan='2'>
+						<a class='item--comment-top__author' href='{{ item.author_url() }}'>{{ item.author }}</a>
+						on
+						{% if item.root is none -%}
+							(unknown story)
+						{%- else -%}
+							<a href='{{ item.root.comments_url() }}'>{{ item.root.title }}</a>
+						{%- endif %}
+						<span class='nowrap'>{{ item.date_posted|time_since }}</span>
+						<span class='nowrap'>
+							<a class='item--comment-top__link' href='{{ item.comments_url() }}'>link</a>
+							{% if item.parent is not none and item.parent_id != item.root_id -%}
+								<a class='item--comment-top__parent-link' href='{{ item.parent.comments_url() }}'>parent</a>
+							{%- endif %}
+						</span>
+					</td>
+				</tr>
+				<tr class='item item--comment'>
+					<td class='item--comment__score-dummy'></td>
+					<td>
+						<div class='item__body'>{{ item.body|safe }}</div>
+					</td>	
+				</tr>
+				

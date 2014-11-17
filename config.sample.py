@@ -12,12 +12,15 @@ DEBUG = True
 
 
 # URL where the app is hosted e.g. http://hnapp.com (without trailing slash)
-# <<< eh... SERVER_NAME?
 HOST_NAME = ''
 
 
 # Google Analytics ID (UA-XXXXXXXX-X). Set to None to disable tracking
 GA_ID = None
+
+
+# Number of items per page to show in GUI and RSS / JSON feeds
+ITEMS_PER_PAGE = 30;
 
 
 # Database connection string in the format engine://db_user:db_password@db_server/db_name

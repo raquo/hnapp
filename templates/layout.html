@@ -9,8 +9,12 @@
 	<meta name='description' content='{{ meta_description }}' />
 	
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=2.0' />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="mobile-web-app-capable" content="yes" />
+	<meta http-equiv='X-UA-Compatible' content='edge' />
+	
+	<!-- Disable mobile web-app mode (not useful)
+	<meta name='apple-mobile-web-app-capable' content='yes' />
+	<meta name='mobile-web-app-capable' content='yes' />
+	-->
 	
 	<link rel='icon' type='image/png' sizes='152x152' href='/img/icons/hnapp-icon-152x152.png' />
 	<link rel='icon' type='image/png' sizes='76x76' href='/img/icons/hnapp-icon-76x76.png' />
@@ -26,18 +30,21 @@
 	<link rel='apple-touch-icon-precomposed' sizes='32x32' href='/img/icons/hnapp-icon-32x32.png' />
 	<link rel='apple-touch-icon-precomposed' sizes='16x16' href='/img/icons/hnapp-icon-16x16.png' />
 	
+	<!-- <<< TODO: Add timestamps / caching. Also, use grunt to minify all this -->
 	<link rel='stylesheet' href='/css/normalize.css' />
 	<link rel='stylesheet' href='/css/hnapp.css' />
+	<script src='/js/native.history.js'></script>
+	<script src='/js/hnapp.js'></script>
 	
-	<meta property="og:title" content="{{ meta_og_title }}" />
-	<meta property="og:description" content="{{ meta_description }}" />
-	<meta property="og:site_name" content="hnapp" />
-	<meta property="og:image" content="{{ HOST_NAME }}/img/icons/hnapp-icon-120x120.png" />
+	<meta property='og:title' content='{{ meta_og_title }}' />
+	<meta property='og:description' content='{{ meta_description }}' />
+	<meta property='og:site_name' content='hnapp' />
+	<meta property='og:image' content='{{ HOST_NAME }}/img/icons/hnapp-icon-120x120.png' />
 	
-	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:title" content="{{ title }}" />
-	<meta name="twitter:description" content="{{ meta_description }}" />
-	<meta name="twitter:site" content="@hnapp" />
+	<meta name='twitter:card' content='summary' />
+	<meta name='twitter:title' content='{{ title }}' />
+	<meta name='twitter:description' content='{{ meta_description }}' />
+	<meta name='twitter:site' content='@hnapp' />
 	
 	{% if rss_url -%}
 		<link rel='alternate' type='application/rss+xml' title='{{ title }}' href='{{ rss_url }}' />
@@ -48,7 +55,26 @@
 {% block main %}
 {% endblock %}
 
-<script src='/js/hnapp.js'></script>
+<script>
+	var state = {
+		
+		isApp: {{ is_app | tojson | safe }},
+		
+		query:  {%- if query is defined and query is not none -%}
+					{{ query | tojson | safe }}
+				{%- else -%}
+					null
+				{%- endif %},
+				
+		pageNum:    {%- if page_num is defined and page_num is not none -%}
+						{{ page_num | tojson | safe }}
+					{%- else -%}
+						null
+					{%- endif %},
+				
+		pendingRequest:null
+	};
+</script>
 
 {% include 'parts/vendor/ga.html' %}
 
