@@ -1,7 +1,7 @@
 User-agent: *
-Disallow: ?q=
-Disallow: rss
-Disallow: status
-Disallow: api/items/
-Disallow: filter/
-Disallow: filters
+Disallow: /?q=
+Disallow: /rss
+Disallow: /status
+Disallow: /api/items/
+Disallow: /filter/
+Disallow: /filters
