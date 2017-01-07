@@ -1,14 +1,12 @@
 {% extends "layout.html" %}
 
 {% block main %}
-	
+
 <main>
-	
+
 	{% include 'parts/header.html' %}
-	
+
 	<section>
-		
-		
 		<h1>Status</h1>
 		<table id='statuses'>
 			{% for status in statuses %}
@@ -29,20 +27,11 @@
 				<td class=''>item_count</td>
 				<td class=''>{{ item_count }} ({{ max_item_id - min_item_id - item_count }} missing)</td>
 			</tr>
-			<tr class='status'>
-				<td class=''>lost_item_ids</td>
-				<td class=''>{{ lost_item_ids }}</td>
-			</tr>
 		</table>
-		
-		
-		
 	</section>
-	
+
 	{% include 'parts/footer.html' %}
-	
+
 </main>
-	
+
 {% endblock %}
-
-

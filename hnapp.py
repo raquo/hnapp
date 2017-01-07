@@ -32,22 +32,22 @@ from utils import time_since, num_digits, query_url
 @app.route('/bare', methods=['GET'])
 @app.route('/', methods=['GET'])
 def route_search():
-	
+
 	# Get query
 	text_query = flask.request.args.get('q', None)
 	page_num = flask.request.args.get('page', 1);
 	show_syntax = flask.request.args.get('show_syntax', 0)
 	has_more_items = False
 	expires = 0
-	
+
 	# Fail if bad parameters provided
 	try:
 		page_num = int(page_num)
 		show_syntax = bool(int(show_syntax))
 	except ValueError:
 		flask.abort(400)
-	
-	# Search page 
+
+	# Search page
 	if text_query is not None:
 		query = Search.query(text_query,
 							 page_num,
@@ -61,20 +61,20 @@ def route_search():
 		query_title = (text_query if len(text_query) > 0 else 'HN Firehose')
 		meta_og_title = u'hnapp search: "%s"' % query_title
 		title = u'%s – hnapp' % query_title
-		
+
 	# Front page
 	else:
 		query = None
 		items = None
 		title = u'hnapp – Hacker News Search With RSS & JSON Feeds'
 		meta_og_title = u'hnapp – Hacker News RSS'
-	
-	
+
+
 	# Meta SEO tags
 	meta_keywords = u'Hacker News,RSS,hnapp'
 	meta_description = u'Get only the stories and comments you want. Follow users, keywords, jobs, mentions of your product, etc.'
-	
-	
+
+
 	# Get format
 	if flask.request.path == '/':
 		output_format = None
@@ -85,8 +85,8 @@ def route_search():
 		output_format = flask.request.path[1:]
 		if output_format == 'bare':
 			html_template = 'parts/items.html'
-	
-	
+
+
 	# Those users who created their filters on alpha version new.hnapp.com
 	# don't expect comments, so we fix it for them
 	if flask.request.args.get('legacy', 0) == '1':
@@ -95,8 +95,8 @@ def route_search():
 			return flask.redirect(query_url(None, output_format=None), code=302)
 		else:
 			return flask.redirect(query_url('type:story '+text_query, output_format=output_format), code=302)
-	
-	
+
+
 	# Web page or bare HTML
 	if output_format in (None, 'bare'):
 		page_data = {
@@ -120,8 +120,8 @@ def route_search():
 			'HOST_NAME': app.config['HOST_NAME']
 			}
 		return flask.render_template(html_template, **page_data)
-	
-	
+
+
 	# RSS
 	elif output_format == 'rss':
 		feed = AtomFeed(title=title.encode('ascii', 'xmlcharrefreplace'),
@@ -134,18 +134,18 @@ def route_search():
 		for item in items:
 			feed.add(**item.feed_entry())
 		return feed.get_response()
-		
-	
+
+
 	# JSON
 	elif output_format == 'json':
-		
+
 		feed = {}
 		feed['has_more_items'] = has_more_items
 		feed['query'] = text_query
 		feed['items'] = [item.json_entry() for item in items]
 		return flask.jsonify(**feed)
-	
-	
+
+
 	# output_format defined but query is not
 	# not supposed to happen, we checked for this above
 	else:
@@ -155,7 +155,7 @@ def route_search():
 
 @app.route('/status', methods=['GET'])
 def route_status():
-	
+
 	statuses = db.session.query(Status).all()
 	max_item_id = db.engine.execute(sqlalchemy.sql.text('SELECT MAX(id) FROM item')).scalar()
 	min_item_id = db.engine.execute(sqlalchemy.sql.text('SELECT MIN(id) FROM item')).scalar()
@@ -169,7 +169,6 @@ def route_status():
 		'max_item_id': max_item_id,
 		'min_item_id': min_item_id,
 		'item_count': item_count,
-		'lost_item_ids': ', '.join([str(item[0]) for item in lost_item_ids]),
 		'ga_id': app.config['GA_ID'],
 		'HOST_NAME': app.config['HOST_NAME']
 		}
