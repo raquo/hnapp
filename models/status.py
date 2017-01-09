@@ -39,7 +39,7 @@ class Status(sqlalchemy.ext.declarative.declarative_base()):
 		
 		AppError.makesure(row is not None, "status.last_item_id not found in DB")
 		AppError.makesure(item_id > 0, "status.last_item_id.number must be set to a positive number")
-		AppError.makesure(item_id >= row.number, "status.last_item_id.number must not be decremented")
+		AppError.makesure(item_id >= row.number, "status.last_item_id.number must not be decremented: %d > %d" % (item_id, row.number))
 		
 		row.number = item_id
 		db.session.add(row)

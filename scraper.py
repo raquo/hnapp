@@ -111,10 +111,15 @@ class Scraper(object):
 		item = None
 		# If item was lost
 		if isinstance(item_data, LostItem):
+			if not item_data.id:
+				return None
 			item = item_data
 			db.session.add(item)
 			debug_print("Lost %s because %s" % (item_data.id, item_data.reason), '\n')
 		else:
+			if 'id' not in item_data:
+				debug_print('Skipping item because empty id', '\n')
+				return None
 			if item_data.get('type', None) in ('story', 'comment', 'poll', 'job', None):
 				debug_print("Saving %d" % item_data['id'], '\n')
 				compiled_data = self.compile_item_data(item_data, front_page)
